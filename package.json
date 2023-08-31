@@ -4,7 +4,9 @@
   "description": "MrKonqi is TuxCord's official Discord bot.",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint ."
   },
   "author": "PixeL",
   "license": "GPL-3.0",
