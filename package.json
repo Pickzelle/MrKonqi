@@ -1,12 +1,19 @@
 {
   "main": "src/index.js",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "lint": "npx eslint ."
   },
   "dependencies": {
     "axios": "^1.5.0",
     "chalk": "^4.1.2",
     "discord.js": "^14.13.0",
     "sqlite3": "^5.1.6"
+  },
+  "optionalDependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.48.0"
   }
 }
