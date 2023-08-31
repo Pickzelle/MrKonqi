@@ -67,6 +67,7 @@ In the src directory of this repository, you'll find a [JSON](./src/config.json)
 | `GUILD_ID`=id | Signifies the Guild ID on Discord where the commands will be sent.
 | `BOT_ID`=id | Denotes the Discord bot's unique identification.
 | `ENV`=path | Defines the path to the .env file.
+| `DEVELOPER_ID`=id | The id the bot will reference to as the Developer.
 | `DEBUG`=boolean | Specifies whether debugging mode is enabled or not.
 
 Here's an example structure for your config.json file:
@@ -77,8 +78,8 @@ Here's an example structure for your config.json file:
     "GUILD_ID": "ID",
     "BOT_ID": "ID",
     "ENV": "PATH",
-    "DEVELOPER_ID": "ID",
     "DEBUG": true,
+    "DEVELOPER_ID": "ID",
 }
 ```
 
