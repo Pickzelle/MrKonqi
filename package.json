@@ -1,0 +1,23 @@
+{
+  "name": "mrkonqi",
+  "version": "1.0.0",
+  "description": "MrKonqi is TuxCord's official Discord bot.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "PixeL",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "chalk": "^4.1.2",
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
+    "eslint": "^8.47.0"
+  }
+}
