@@ -3,8 +3,8 @@
  * @module credits
  */
 const { EmbedBuilder, SlashCommandBuilder, AttachmentBuilder } = require('discord.js');
-const PATH = require('path')
-const LOGO = new AttachmentBuilder(PATH.join(__dirname, 'assets', 'dev-qt.png');
+const PATH = require('path');
+const LOGO = new AttachmentBuilder(PATH.join(__dirname, 'assets', 'dev-qt.png'));
 const CREDITS = new EmbedBuilder()
 	.setTitle('Credits')
 	.setDescription(`
