@@ -5,7 +5,7 @@
 const PATH = require('node:path');
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require('discord.js');
 const AUR = require('#modules/callAUR.js');
-const SPAWN = require('#modules/fetch-pkgs/index.js');
+const FETCH_PKGS = require('#modules/fetch-pkgs/index.js');
 const LOGO = new AttachmentBuilder(PATH.join(__dirname, '..', '..', 'assets', 'archlinux.png'));
 const ROW = new ActionRowBuilder();
 let embed = new EmbedBuilder();
@@ -268,7 +268,7 @@ module.exports = {
 			}
 
 			try {
-				await SPAWN();
+				await FETCH_PKGS();
 			}
 			catch (error) {
 				console.log(error);

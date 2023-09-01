@@ -1,7 +1,7 @@
 const { AttachmentBuilder, EmbedBuilder } = require('discord.js');
 const { readFileSync } = require('node:fs');
 const PATH = require('node:path');
-const SPAWN = require('#modules/fetch-pkgs/index.js');
+const FETCH_PKGS = require('#modules/fetch-pkgs/index.js');
 const ARCH = new AttachmentBuilder(PATH.join(__dirname, '..', '..', 'assets', 'archlinux.png'));
 
 /**
@@ -73,7 +73,7 @@ module.exports = {
 		const ephemeral = Interaction.ephemeral;
 
 		try {
-			await SPAWN();
+			await FETCH_PKGS();
 		}
 		catch (e) {
 			console.log(e);
