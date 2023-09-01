@@ -22,19 +22,23 @@ module.exports = {
 		.setName('delete')
 		.setNameLocalizations({
 			'sv-SE': 'radera',
+			'es-ES': 'eliminar',
 		})
 		.setDescription('Deletes values from the db')
 		.setDescriptionLocalizations({
 			'sv-SE': 'Raderar värden från databasen',
+			'es-ES': 'Elimina valores de la base de datos',
 		})
 		.addChannelOption(option => option
 			.setName('channel')
 			.setNameLocalizations({
 				'sv-SE': 'kanal',
+				'es-ES': 'canal',
 			})
 			.setDescription('the channel to delete')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Kanalen att radera',
+				'es-ES': 'El canal que eliminar',
 			})
 			.setRequired(true),
 		)

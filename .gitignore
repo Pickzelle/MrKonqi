@@ -2,3 +2,4 @@ build/
 node_modules/
 .git/
 src/stored
+src/config.json
