@@ -4,7 +4,7 @@
  */
 const { EmbedBuilder, SlashCommandBuilder, AttachmentBuilder } = require('discord.js');
 const PATH = require('path');
-const LOGO = new AttachmentBuilder(PATH.join(__dirname, '..', 'assets', 'dev-qt.png'));
+const LOGO = new AttachmentBuilder(PATH.join(__dirname, '..', '..', 'assets', 'dev-qt.png'));
 const CREDITS = new EmbedBuilder()
 	.setTitle('Credits')
 	.setDescription(`
@@ -12,7 +12,7 @@ MrKonqi is a Discord bot specially designed for TuxCord. This bot is developed a
 
 MrKonqi is tied to the GNU General Public License 3. You can view the repository here: [github](https://github.com/Pickzelle/MrKonqi)
 
-MrKonqi offers a wide range of features to assist and support our community. From providing aid in support-related discussions 
+MrKonqi offers a wide range of features to assist and support our community. From providing aid in support-related discussions
 to monitoring and ensuring the safety of our members, MrKonqi is here to lend a helping hand.
 
 It's essential to note that while processing responses, MrKonqi may store anonymous information like forum post IDs.

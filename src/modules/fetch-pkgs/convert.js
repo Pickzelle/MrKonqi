@@ -89,7 +89,7 @@ async function extractGzip(gzipFile) {
  */
 async function processGzipFiles() {
 	try {
-		const dbDir = './stored/';
+		const dbDir = PATH.join(__dirname, '../../stored');
 
 		const files = await readdir(PATH.join(OS.tmpdir(), 'MrKonqi'));
 		const gzipFiles = files.filter(file => PATH.extname(file) === '.db');
@@ -116,4 +116,4 @@ async function processGzipFiles() {
 	}
 }
 
-processGzipFiles();
+module.exports = processGzipFiles;

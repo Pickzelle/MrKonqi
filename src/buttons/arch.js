@@ -1,8 +1,8 @@
 const { AttachmentBuilder, EmbedBuilder } = require('discord.js');
 const { readFileSync } = require('node:fs');
-const PATH = require('path');
-const SPAWN = require(PATH.join(__dirname, '..', 'modules', 'spawn.js'));
-const ARCH = new AttachmentBuilder(PATH.join(__dirname, 'assets', 'archlinux.png'));
+const PATH = require('node:path');
+const SPAWN = require('#modules/fetch-pkgs/index.js');
+const ARCH = new AttachmentBuilder(PATH.join(__dirname, '..', '..', 'assets', 'archlinux.png'));
 
 /**
  * Extracts unique package names from a given input string that contains package names in bold.
@@ -79,10 +79,10 @@ module.exports = {
 			console.log(e);
 		}
 
-		const { lastFetchTimestamp } = JSON.parse(readFileSync(PATH.join('stored', 'timestamp.json')));
+		const { lastFetchTimestamp } = JSON.parse(readFileSync(PATH.join(__dirname, '../stored', 'timestamp.json')));
 
 		// Read the JSON file for the specific repository.
-		const file = readFileSync(`./stored/${repo}.json`, 'utf-8');
+		const file = readFileSync(PATH.join(__dirname, `../stored/${repo}.json`), 'utf-8');
 		const parsed = JSON.parse(file);
 		const packageNames = extractPackageName(package);
 
@@ -170,4 +170,3 @@ module.exports = {
 
 	},
 };
-
