@@ -7,6 +7,14 @@ const PATH = require('path');
 const UPDATE = require(PATH.join(__dirname, '..', 'modules', 'updateFeatureRequest.js'));
 const { insertEntry } = require(PATH.join(__dirname, '..', 'modules', 'database.js'));
 
+let config = null;
+
+try {
+	config = require(PATH.join(__dirname, '..', 'config.json'));
+}
+// eslint-disable-next-line
+catch { }
+
 const SUGGESTIONS_CHANNEL_ID = process.env.DEVELOPER_ID ?? config?.DEVELOPER_ID ?? null;
 const PROTECTED_SUGGESTIONS_POST_ID = process.env.DEVELOPER_ID ?? config?.DEVELOPER_ID ?? null;
 
