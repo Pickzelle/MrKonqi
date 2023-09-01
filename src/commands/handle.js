@@ -15,8 +15,8 @@ try {
 // eslint-disable-next-line
 catch { }
 
-const SUGGESTIONS_CHANNEL_ID = process.env.DEVELOPER_ID ?? config?.DEVELOPER_ID ?? null;
-const PROTECTED_SUGGESTIONS_POST_ID = process.env.DEVELOPER_ID ?? config?.DEVELOPER_ID ?? null;
+const SUGGESTIONS_CHANNEL_ID = process.env.SUGGESTIONS_CHANNEL_ID ?? config?.SUGGESTIONS_CHANNEL_ID ?? null;
+const PROTECTED_SUGGESTIONS_POST_ID = process.env.PROTECTED_SUGGESTIONS_POST_ID ?? config?.PROTECTED_SUGGESTIONS_POST_ID ?? null;
 
 /**
  * Updates the status of a suggestion in the database and replies to an interaction with the flagging information.
@@ -109,7 +109,7 @@ module.exports = {
 		const TYPE = Interaction.options.getSubcommand();
 
 		if (Interaction.channel.isThread() == false) return await Interaction.reply({ content: 'This command can only be used in forum posts.', ephemeral: true });
-		if (Interaction.channel.parent.id !== SUGGESTIONS_CHANNEL_ID) return await Interaction.reply({ content: `This command can only be executed in <${SUGGESTIONS_CHANNEL_ID}>.`, ephemeral: true });
+		if (Interaction.channel.parent.id !== SUGGESTIONS_CHANNEL_ID) return await Interaction.reply({ content: `This command can only be executed in <#${SUGGESTIONS_CHANNEL_ID}>.`, ephemeral: true });
 		if (Interaction.channel.id == PROTECTED_SUGGESTIONS_POST_ID) return await Interaction.reply({ content: 'This command cannot be used in this post.', ephemeral: true });
 		if (Interaction.channel.locked) return await Interaction.reply({ content: 'Only unlocked/active posts can be handled.', ephemeral: true });
 
