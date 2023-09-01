@@ -1,6 +1,6 @@
 const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const PATH = require('path');
-const LOGO = new AttachmentBuilder(PATH.join(__dirname, 'assets', 'science.png'));
+const LOGO = new AttachmentBuilder(PATH.join(__dirname, '../../assets/science.png'));
 
 /**
  * Updates the Feature Tracker.
