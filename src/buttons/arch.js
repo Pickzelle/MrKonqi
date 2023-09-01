@@ -44,7 +44,7 @@ function extractNonBreakingSpace(inputString) {
  */
 function formatSize(sizeInBytes) {
 
-	const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+	const units = ['B', 'KiB', 'MiB', 'GiB', 'TiB'];
 	let size = parseFloat(sizeInBytes);
 
 	let unitIndex = 0;
