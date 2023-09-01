@@ -42,19 +42,23 @@ module.exports = {
 		.setName('clear')
 		.setNameLocalizations({
 			'sv-SE': 'rensa',
+			'es-ES': 'borrar',
 		})
 		.setDescription('Clears a given amount of messages in a channel')
 		.setDescriptionLocalizations({
 			'sv-SE': 'rensar ett givet nummer av meddelanden i en kanal',
+			'es-ES': 'Borra dicha cantidad de mensajes en un canal',
 		})
 		.addNumberOption(option => option
 			.setName('amount')
 			.setNameLocalizations({
 				'sv-SE': 'mängd',
+				'es-ES': 'cantidad',
 			})
 			.setDescription('The amount of messages to delete')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Antalet meddelanden att radera',
+				'es-ES': 'Cantidad de mensajes que borrar',
 			})
 			.setRequired(true),
 		)
@@ -63,6 +67,7 @@ module.exports = {
 			.setDescription('The id of the account you want to filter with')
 			.setDescriptionLocalizations({
 				'sv-SE': 'ID:t för det konto som du vill filtrera med',
+				'es-ES': 'ID de la cuenta que quieres filtar'
 			}),
 		)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),

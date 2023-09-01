@@ -23,19 +23,23 @@ module.exports = {
 		.setName('insert')
 		.setNameLocalizations({
 			'sv-SE': 'infoga',
+			'es-ES': 'insertar',
 		})
 		.setDescription('Inserts values into the database')
 		.setDescriptionLocalizations({
 			'sv-SE': 'Infogar värden till databasen',
+			'es-ES': 'Inserta valores a la base de datos',
 		})
 		.addChannelOption(option => option
 			.setName('channel')
 			.setNameLocalizations({
 				'sv-SE': 'kanal',
+				'es-ES': 'canal',
 			})
 			.setDescription('The channel to insert')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Kanalen att infoga',
+				'es-ES': 'Canal en el que insertar',
 			})
 			.setRequired(true),
 		)
@@ -44,6 +48,7 @@ module.exports = {
 			.setDescription('The status to give it')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Statusen att ge den',
+				'es-ES': 'El estado que dar',
 			})
 			.addChoices(
 				{ name: 'wait', value: 'wait' },

@@ -22,10 +22,12 @@ module.exports = {
 		.setName('help')
 		.setNameLocalizations({
 			'sv-SE': 'hjälp',
+			'es-ES': 'ayuda',
 		})
 		.setDescription('Gives you a list of my commands')
 		.setDescriptionLocalizations({
 			'sv-SE': 'Ger dig en lista av mina kommandon',
+			'es-ES': 'Ofrece una lista de mis comandos',
 		}),
 
 	/**

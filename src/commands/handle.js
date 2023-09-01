@@ -40,49 +40,59 @@ module.exports = {
 		.setName('handle')
 		.setNameLocalizations({
 			'sv-SE': 'hantera',
+			'es-ES': 'manejar',
 		})
 		.setDescription('Handles suggestion posts')
 		.setDescriptionLocalizations({
 			'sv-SE': 'Hanterar förslagsinlägg',
+			'es-ES': 'Maneja posts de sugerencias',
 		})
 		.addSubcommand(subCommand => subCommand
 			.setName('approve')
 			.setNameLocalizations({
 				'sv-SE': 'godkänn',
+				'es-ES': 'aprobar',
 			})
 			.setDescription('Approves a feature request')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Godkänner en funktionsbegäran',
+				'es-ES': 'Aprueba una petición de característica',
 			}),
 		)
 		.addSubcommand(subCommand => subCommand
 			.setName('deny')
 			.setNameLocalizations({
 				'sv-SE': 'neka',
+				'es-ES': 'rechazar',
 			})
 			.setDescription('Denies a feature request')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Nekar en funktionsbegäran',
+				'es-ES': 'Rechaza una petición de característica',
 			}),
 		)
 		.addSubcommand(subCommand => subCommand
 			.setName('details')
 			.setNameLocalizations({
 				'sv-SE': 'detaljer',
+				'es-ES': 'detalles',
 			})
 			.setDescription('Asks that more details should be provided')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Frågar om att mera detailjer behövs',
+				'es-ES': 'Pide que se deben añadir más detalles',
 			}),
 		)
 		.addSubcommand(subCommand => subCommand
 			.setName('wait')
 			.setNameLocalizations({
 				'sv-SE': 'vänta',
+				'es-ES': 'esperar',
 			})
 			.setDescription('Reverts the feature request back to awaiting decision')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Återgår funktionsbegäran till väntar på beslut',
+				'es-ES': 'Revierte una petición de característica a esperando una decisión',
 			}),
 		)
 		.setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),

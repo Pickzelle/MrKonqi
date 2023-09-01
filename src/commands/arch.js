@@ -179,7 +179,7 @@ module.exports = {
 		.setDescription('Performs a search in the Arch package database for packages')
 		.setDescriptionLocalizations({
 			'sv-SE': 'Utför en sökning i Archs paketförråd efter paket',
-			'es-ES': 'Hace una busqueda de paquetes en la base de datos de Arch'
+			'es-ES': 'Hace una busqueda de paquetes en la base de datos de Arch',
 		})
 		.addStringOption(option => option
 			.setName('package')
@@ -187,23 +187,23 @@ module.exports = {
 			.setRequired(true)
 			.setNameLocalizations({
 				'sv-SE': 'paket',
-				'es-ES': 'paquete'
+				'es-ES': 'paquete',
 			})
 			.setDescriptionLocalizations({
 				'sv-SE': 'Paketet du vill söka efter',
-				'es-ES': 'El paquete que buscas'
+				'es-ES': 'El paquete que buscas',
 			}),
 		)
 		.addStringOption(option => option
 			.setName('repository')
 			.setNameLocalizations({
 				'sv-SE': 'paketförråd',
-				'es-ES': 'repositorio'
+				'es-ES': 'repositorio',
 			})
 			.setDescription('Which repository to fetch from')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Vilket paketförråd att söka igenom',
-				'es-ES': 'De que repositorio buscar'
+				'es-ES': 'De que repositorio buscar',
 			})
 			.addChoices(
 				{ name: 'Core', value: 'core' },
@@ -220,24 +220,24 @@ module.exports = {
 			.setName('dependencies')
 			.setNameLocalizations({
 				'sv-SE': 'beroenden',
-				'es-ES': 'dependencias'
+				'es-ES': 'dependencias',
 			})
 			.setDescription('Whether or not to show dependencies for the given package')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Huruvida beroenden för det givna paketet ska visas eller inte',
-				'es-ES': 'Si mostrar o no las dependencias del paquete'
+				'es-ES': 'Si mostrar o no las dependencias del paquete',
 			}),
 		)
 		.addBooleanOption(option => option
 			.setName('ephemeral')
 			.setNameLocalizations({
 				'sv-SE': 'efemär',
-				'es-ES': 'efímero'
+				'es-ES': 'efímero',
 			})
 			.setDescription('Toggles whether or not this message should be ephemeral')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Växlar om detta meddelande ska vara kortlivat eller inte',
-				'es-ES': 'Establece si este mensaje debería ser efímero'
+				'es-ES': 'Establece si este mensaje debería ser efímero',
 			}),
 		),
 

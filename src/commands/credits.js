@@ -39,19 +39,23 @@ module.exports = {
 		.setName('credits')
 		.setNameLocalizations({
 			'sv-SE': 'kredit',
+			'es-ES': 'créditos',
 		})
 		.setDescription('Shows credits and general info')
 		.setDescriptionLocalizations({
 			'sv-SE': 'Visar kredit och generell info',
+			'es-ES': 'Muestra los créditos e información general',
 		})
 		.addBooleanOption(option => option
 			.setName('ephemeral')
 			.setNameLocalizations({
 				'sv-SE': 'efemär',
+				'es-ES': 'efímero',
 			})
 			.setDescription('Toggles whether or not this message should be ephemeral')
 			.setDescriptionLocalizations({
 				'sv-SE': 'Växlar om det här meddelandet ska vara kortvarigt eller inte',
+				'es-ES': 'Establece si este mensaje debería ser efímero',
 			}),
 		),
 
