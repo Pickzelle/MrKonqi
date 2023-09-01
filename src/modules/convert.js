@@ -8,7 +8,7 @@ const { green } = require('chalk');
 /**
  * This file is a "hacky" way to extract the file contents from the archives quickly.
  * Instead of extracting all archives, we extract the top one (gzip) and remove the null bytes.
- * We then push those values into a JSON file so we can access the data more conveiently.
+ * We then push those values into a JSON file so we can access the data more conveniently.
  */
 
 /**
