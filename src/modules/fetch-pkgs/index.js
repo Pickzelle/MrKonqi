@@ -7,19 +7,16 @@ const convertPackages = require('./convert.js');
  * @throws {Error} If there's any unexpected error during the process.
  */
 async function main() {
-	return new Promise(async (resolve, reject) => {
-		let alreadyFetched = await downloadPackages().catch(err => {
-			reject(new Error('Error downloading packages: ' + err));
-		});
-
-		if(!alreadyFetched) {
-			// Convert packages just if they haven't been fetched recently
-			await convertPackages().catch(err => {
-				reject(new Error('Error converting packages ' + err))
-			});
-		}
-		resolve();
+	const alreadyFetched = await downloadPackages().catch(err => {
+		throw new Error('Error downloading packages: ' + err);
 	});
+
+	if (!alreadyFetched) {
+		// Convert packages just if they haven't been fetched recently
+		await convertPackages().catch(err => {
+			throw new Error('Error converting packages ' + err);
+		});
+	}
 }
 
 module.exports = main;

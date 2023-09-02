@@ -71,7 +71,7 @@ function loadLastFetchTimestamp() {
  * @async
  */
 function downloadFileFromURL() {
-	return new Promise(async (resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		const lastFetchTimestamp = loadLastFetchTimestamp();
 		const currentTimestamp = Date.now();
 		const threeHoursInMilliseconds = 3 * 60 * 60 * 1000;
@@ -118,13 +118,14 @@ function downloadFileFromURL() {
 				});
 			});
 
-			await Promise.all(downloadPromises)
+			Promise.all(downloadPromises)
 				.then(() => {
 					saveLastFetchTimestamp(currentTimestamp);
-					resolve(false)
+					resolve(false);
 				})
 				.catch(reject);
-		} else resolve(true);
+		}
+		else { resolve(true); }
 	});
 }
 

@@ -60,7 +60,7 @@ module.exports = {
 				console.log(green(`[Interaction] - A modal event calling ${Interaction.customId} was executed.`));
 
 				const MODAL = BOT.modals.get(Interaction.customId);
-				MODAL.execute(BOT, Interaction);
+				if (MODAL) MODAL.execute(BOT, Interaction);
 
 			}
 		}

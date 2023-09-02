@@ -14,7 +14,7 @@ module.exports = {
 		.setDescription('Different commands to report certain events')
 		.setDescriptionLocalizations({
 			'sv-SE': 'Olika kommandon för att rapportera vissa händelser',
-			'es-ES': 'Diferentes comandos para reportar ciertos eventos'
+			'es-ES': 'Diferentes comandos para reportar ciertos eventos',
 		})
 		.addSubcommand(subcommand => subcommand
 			.setName('user')

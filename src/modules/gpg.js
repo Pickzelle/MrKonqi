@@ -1,5 +1,5 @@
 const axios = require('axios').default;
-const gpg = require('openpgp');
+// const gpg = require('openpgp');
 
 /**
  * @typedef {Object} QueryResult
@@ -85,6 +85,7 @@ function parseResults(htmlData = '', prot, host) {
  * @param {import('discord.js').Client} BOT - The Discord bot client
  * @param {import('sqlite3').Database} DB - SQLite3 database
  */
+// eslint-disable-next-line no-unused-vars
 function init(BOT, DB) {
 	return {
 		/**
