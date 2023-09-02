@@ -37,7 +37,7 @@ module.exports = {
 			else if (Interaction.isButton()) {
 
 				let button;
-				const REGEX = /^[a-zA-Z]+ \| \d+$/g;
+				const REGEX = /^[a-zA-Z-]+ \| \d+$/g;
 
 				const MATCH = Interaction.customId.match(REGEX);
 
