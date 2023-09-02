@@ -15,11 +15,14 @@ function genLookupUrl(prot, host, query) {
 
 function listResuts(url, prot, host, fn) {
     return new Promise((resolve, reject) => {
-        axios.get(url).then(response => {
+        axios.get(url, { timeout: 2500 }).then(response => {
             let results = parseResults(response.data, prot, host);
             for (let result of results) fn(result);
             resolve();
-        }).catch(reject);
+        }).catch((err) => {
+            if(err.code === 'ECONNABORTED') return resolve(); // Just ignore if timed out
+            reject();
+        });
     })
 
 }
@@ -30,7 +33,7 @@ function parseResults(htmlData = '', prot, host) {
         htmlData.slice(htmlData.indexOf('<hr />'), htmlData.indexOf('</body>'))
             .split('<hr />').slice(1);
 
-    if (results.length > 10) throw 'Too many entries, try a more specific query.';
+    if (results.length > 25) throw 'Too many entries, try a more specific query.';
 
     results = results.map(result => {
         let keyid, date, dwUrl, uids = [];
@@ -105,6 +108,7 @@ function init(BOT, DB) {
          */
         async importKeyToUser(url, user) {
             const key = await axios.get(url);
+            console.log('Fetched ' + url + ' for user ' + user.displayName);
             // !? Save key into user ID (user.id), throw string with message if any error
         }
     }

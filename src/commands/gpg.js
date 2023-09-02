@@ -2,8 +2,73 @@
  * Discord Bot Gpg Command
  * @module arch
  */
-const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Component, ComponentType } = require('discord.js');
 const gpg = require('#modules/gpg.js');
+
+async function askForSignature(interaction) {
+    const modal = new ModalBuilder()
+        .setCustomId('verify-gpg')
+        .setTitle('Verify Identity');
+
+    const signatureInput = new TextInputBuilder()
+        .setCustomId('signature')
+        .setLabel(`Sign: 'Yes, I'm ${interaction.user.id}'`)
+        .setStyle(TextInputStyle.Paragraph);
+
+    const actionRow = new ActionRowBuilder().addComponents(signatureInput);
+
+    modal.addComponents(actionRow);
+    await interaction.showModal(modal);
+    const modalSubmit = await interaction.awaitModalSubmit({
+        time: 15 * 60 * 1000, // 15 minutes
+        filter: i => i.user.id === interaction.user.id,
+    }).catch(error => {
+        console.error(error);
+    });
+    if (modalSubmit) return modalSubmit;
+}
+
+function multipleKeysChoice(keys, id) {
+    function formatKeyToField(key, i) {
+        return {
+            name: `${i}. **${key.keyid}**\n<t:${key.date.getTime() / 1000}>`,
+            value: `[download](${key.dwUrl})\n` +
+                key.uids.map(([identity, date]) =>
+                    `${identity} <t:${date.getTime() / 1000}>`
+                ).join('\n'),
+            inline: false
+        };
+    }
+    function formatKeyToMenuOption(key, i) {
+        return new StringSelectMenuOptionBuilder()
+            .setLabel(`${i}. ${key.keyid}`)
+            .setDescription(`<t:${key.date.getTime() / 1000}>`)
+            .setValue(key.dwUrl);
+    }
+
+    const select = new StringSelectMenuBuilder()
+        .setCustomId(id)
+        .setPlaceholder('Choose a key!')
+        .addOptions(...keys.map(formatKeyToMenuOption));
+
+    const row = new ActionRowBuilder()
+        .addComponents(select);
+
+    const embed = new EmbedBuilder()
+        .setTitle('Select GPG key')
+        .setFields(...keys.map(formatKeyToField))
+
+
+    return { embeds: [embed], components: [row] };
+}
+
+function importKeyEmbed(importPromise, interaction) {
+    importPromise.then(keyData => {
+        interaction.reply('Sucessfully imported key!') // TODO: make nice and use keyData
+    }).catch(err => {
+        interaction.reply('Oops! something went wrong: ' + err)
+    })
+}
 
 // gpg
 // └── import
@@ -86,17 +151,31 @@ module.exports = {
                     let query = interaction.options._hoistedOptions
                         .find(option => option.name === 'query').value;
 
+                    // Query keyservers for keys
                     let results = await gpgLib.searchKeyservers(query)
                         .catch(interaction.reply);
                     if (!results) return; // Only triggers if search failed
 
                     if (results.length == 0) {
+                        // No keys found
                         interaction.reply('Counldn\'t find any result for the query');
                     } else if (results.length == 1) {
-                        importKey(results[0]);
-                    } else if (results.length <= 10) {
-                        // !? show dialog (0-9 buttons max) and call importKey() on final key
-                        interaction.reply('Found multiple entries, this is in development');
+                        // One key found
+                        const modalResponse = await askForSignature(interaction);
+                        let signature = modalResponse.fields.fields.find(response => response.customId === 'signature').value;
+                        // TODO: Verify signature before importing it
+                        importKeyEmbed(importKey(results[0], interaction.user), modalResponse);
+                    } else if (results.length <= 25) {
+                        const reply = await interaction.reply(multipleKeysChoice(results, interaction.id));
+                        const collector = reply.createMessageComponentCollector({
+                            componentType: ComponentType.StringSelect,
+                            filter: i => i.user.id === interaction.user.id && i.customId === interaction.id,
+                            time: 60 * 1000 // 1min
+                        });
+                        collector.on('collect', interaction => {
+                            const keyToImport = results.find(key => key.dwUrl === interaction.values[0]);
+                            importKey(keyToImport);
+                        })
                     } else {
                         interaction.reply('Too many entries, try a more specific query.');
                     }
@@ -108,8 +187,9 @@ module.exports = {
                     gpgLib.importKeyToUser(attachment.url, interaction.user)
                         .catch(interaction.reply);
 
-                    // !? make this an embed if you want (importKeyToUser could return key data such as id and be used here 🤔)
-                    interaction.reply('Successfully imported key');
+                    const modalResponse = await askForSignature(interaction);
+                    // TODO: Verify signature before importing
+                    importKeyEmbed(importKey(attachment, interaction.user), modalResponse);
                 }
                 break;
         }
