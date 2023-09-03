@@ -163,34 +163,40 @@ function importKeyEmbed(importPromise, interaction) {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('gpg')
-		.setDescription('Allows to link your gpg key to your discord account or verify messages')
+		.setDescription('Allows you to link your gpg key to your discord account or verify messages')
 		.setDescriptionLocalizations({
 			'es-ES': 'Permite enlazar tu clave gpg a tu cuenta de discord o verificar mensajes',
+			'sv-SE': 'Tillåter dig att länka din gpg nyckel till ditt discord konto eller verifiera meddelanden',
 		})
 		.addSubcommand(subCommandGroup => subCommandGroup
 			.setName('import')
 			.setNameLocalizations({
 				'es-ES': 'importar',
+				'sv-SE': 'importera',
 			})
 			.setDescription('Imports a gpg key')
 			.setDescriptionLocalizations({
 				'es-ES': 'Importa una clave gpg',
+				'sv-SE': 'Importerar en gpg nyckel',
 			})
 			.addStringOption(keyID => keyID
 				.setName('query')
 				.setDescription('Query to look for on keyservers')
 				.setDescriptionLocalizations({
 					'es-ES': 'Busqueda que haver en los servidores de claves',
+					'sv-SE': 'Sökfråga att leta efter på nyckel-servrarna',
 				}),
 			)
 			.addAttachmentOption(file => file
 				.setName('file')
 				.setNameLocalizations({
 					'es-ES': 'archivo',
+					'sv-SE': 'fil',
 				})
 				.setDescription('Public key')
 				.setDescriptionLocalizations({
 					'es-ES': 'Clave pública',
+					'sv-SE': 'Publik nyckel',
 				}),
 			),
 		),
