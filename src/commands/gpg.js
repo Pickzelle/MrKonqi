@@ -167,7 +167,7 @@ module.exports = {
 		.setDescriptionLocalizations({
 			'es-ES': 'Permite enlazar tu clave gpg a tu cuenta de discord o verificar mensajes',
 		})
-		.addSubcommandGroup(subCommandGroup => subCommandGroup
+		.addSubcommand(subCommandGroup => subCommandGroup
 			.setName('import')
 			.setNameLocalizations({
 				'es-ES': 'importar',
@@ -176,35 +176,22 @@ module.exports = {
 			.setDescriptionLocalizations({
 				'es-ES': 'Importa una clave gpg',
 			})
-			.addSubcommand(subCommand => subCommand
+			.addStringOption(keyID => keyID
 				.setName('query')
-				.setDescription('query')
-				.addStringOption(keyID => keyID
-					.setName('query')
-					.setDescription('Query to look for on keyservers')
-					.setDescriptionLocalizations({
-						'es-ES': 'Busqueda que haver en los servidores de claves',
-					})
-					.setRequired(true),
-				),
+				.setDescription('Query to look for on keyservers')
+				.setDescriptionLocalizations({
+					'es-ES': 'Busqueda que haver en los servidores de claves',
+				}),
 			)
-			.addSubcommand(subCommand => subCommand
+			.addAttachmentOption(file => file
 				.setName('file')
 				.setNameLocalizations({
 					'es-ES': 'archivo',
 				})
-				.setDescription('Public key attachment')
-				.addAttachmentOption(file => file
-					.setName('file')
-					.setNameLocalizations({
-						'es-ES': 'archivo',
-					})
-					.setDescription('Public key')
-					.setDescriptionLocalizations({
-						'es-ES': 'Clave pública',
-					})
-					.setRequired(true),
-				),
+				.setDescription('Public key')
+				.setDescriptionLocalizations({
+					'es-ES': 'Clave pública',
+				}),
 			),
 		),
 
@@ -222,12 +209,26 @@ module.exports = {
 			return gpgLib.importKeyToUser(keyData, keyID, interaction.user);
 		}
 
-		switch (interaction.options._group) {
-			case 'import':
+		switch (interaction.options._subcommand) {
+			case 'import': {
 				// Query key on keyservers
-				if (interaction.options._subcommand == 'query') {
-					const query = interaction.options._hoistedOptions
-						.find(option => option.name === 'query').value;
+				const query = interaction.options._hoistedOptions
+					.find(option => option.name === 'query')?.value;
+				const attachment = interaction.options._hoistedOptions
+					.find(option => option.name === 'file')?.attachment?.url;
+
+				// Import from attached file
+				if (attachment) {
+					const { signInteraction, keyData, keyID } =
+						await askForSignatureAndVerify(interaction, attachment);
+					if (!signInteraction) return;
+
+					importKeyEmbed(
+						importKey(keyData, keyID),
+						signInteraction,
+					);
+				}
+				else if (query) {
 
 					// Query keyservers for keys
 					const results = await gpgLib.searchKeyservers(query)
@@ -280,21 +281,11 @@ module.exports = {
 						interaction.reply('Too many entries, try a more specific query.');
 					}
 				}
-				// Import from attached file
-				else if (interaction.options._subcommand == 'file') {
-					const attachment = interaction.options._hoistedOptions
-						.find(option => option.name === 'file').attachment.url;
-
-					const { signInteraction, keyData, keyID } =
-						await askForSignatureAndVerify(interaction, attachment);
-					if (!signInteraction) return;
-
-					importKeyEmbed(
-						importKey(keyData, keyID),
-						signInteraction,
-					);
+				else {
+					interaction.reply('Please, put a query or attach a key file');
 				}
 				break;
+			}
 		}
 	},
 };
