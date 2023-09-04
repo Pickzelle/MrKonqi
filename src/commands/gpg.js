@@ -4,7 +4,7 @@
  */
 const {
 	SlashCommandBuilder,
-	EmbedBuilder,
+	EmbedBuilder, AttachmentBuilder,
 	ModalBuilder, ActionRowBuilder,
 	TextInputBuilder, TextInputStyle,
 	StringSelectMenuBuilder, StringSelectMenuOptionBuilder,
@@ -13,6 +13,8 @@ const {
 const axios = require('axios').default;
 const openpgp = require('openpgp');
 const gpg = require('#modules/gpg.js');
+const PATH = require('node:path');
+const LOGO = new AttachmentBuilder(PATH.join(__dirname, '../../assets/gnupg.png'));
 
 async function askForSignature(interaction) {
 	const modal = new ModalBuilder()
@@ -109,20 +111,20 @@ async function askForSignatureAndVerify(interaction, key) {
 }
 
 function multipleKeysChoice(keys, id) {
-	function formatKeyToField(key, i) {
+	function formatKeyToField(key) {
 		return {
-			name: `${i}. **${key.keyid}**\n<t:${key.date.getTime() / 1000}>`,
-			value: `[download](${key.dwUrl})\n` +
-				key.uids.map(([identity, date]) =>
-					`${identity} <t:${date.getTime() / 1000}>`,
-				).join('\n'),
+			name: `${key.keyid.split('/')[1]} (<t:${key.date.getTime() / 1000}:d>)`,
+			value: key.uids.map(([identity, date]) =>
+				`${identity} (<t:${date.getTime() / 1000}:d>)`,
+			).join('\n') +
+			`\n[download](${key.dwUrl})`,
 			inline: false,
 		};
 	}
-	function formatKeyToMenuOption(key, i) {
+	function formatKeyToMenuOption(key) {
 		return new StringSelectMenuOptionBuilder()
-			.setLabel(`${i}. ${key.keyid}`)
-			.setDescription(`<t:${key.date.getTime() / 1000}>`)
+			.setLabel(key.keyid.split('/')[1])
+			.setDescription(key.uids[0][0])
 			.setValue(key.dwUrl);
 	}
 
@@ -136,11 +138,12 @@ function multipleKeysChoice(keys, id) {
 
 	const embed = new EmbedBuilder()
 		.setTitle('Select GPG key')
-		.setFields(...keys.map(formatKeyToField));
-
+		.setFields(...keys.map(formatKeyToField))
+		.setThumbnail('attachment://gnupg.png')
+		.setColor('#0093dd');
 
 	if (embed.length > 6000) return 'Found too many results, try a more specific query';
-	return { embeds: [embed], components: [row] };
+	return { embeds: [embed], files: [LOGO], components: [row] };
 }
 
 function importKeyEmbed(importPromise, interaction) {
