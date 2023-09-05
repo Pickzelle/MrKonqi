@@ -1,7 +1,7 @@
 {
-	"DEVELOPER_ID": "",
-	"TOKEN": "",
-	"GUILD_ID": "",
 	"BOT_ID": "",
-	"DEBUG": true
+	"DEBUG": true,
+	"DEVELOPER_ID": "",
+	"GUILD_ID": "",
+	"TOKEN": ""
 }
