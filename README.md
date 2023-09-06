@@ -42,8 +42,10 @@ MrKonqi is a Discord bot used for moderating the TuxCord Discord server. He has 
 ```bash
 git clone https://github.com/Pickzelle/MrKonqi.git
 cd MrKonqi
-npm install discord.js chalk@4.1.2 sqlite3 axios
+npm install
 ```
+
+> ⓘ You can pass `--no-optional` to npm if you don't want the optional packages.
 
 ### Optional
 
@@ -63,23 +65,23 @@ In the src directory of this repository, you'll find a [JSON](./src/config.json)
 
 | Example | Description |
 | --------------------- | ----------- |
-| `TOKEN`=token | Represents the token of the Discord bot.
-| `GUILD_ID`=id | Signifies the Guild ID on Discord where the commands will be sent.
 | `BOT_ID`=id | Denotes the Discord bot's unique identification.
-| `ENV`=path | Defines the path to the .env file.
-| `DEVELOPER_ID`=id | The id the bot will reference to as the Developer.
 | `DEBUG`=boolean | Specifies whether debugging mode is enabled or not.
+| `DEVELOPER_ID`=id | The id the bot will reference to as the Developer.
+| `ENV`=path | Defines the path to the .env file.
+| `GUILD_ID`=id | Signifies the Guild ID on Discord where the commands will be sent.
+| `TOKEN`=token | Represents the token of the Discord bot.
 
 Here's an example structure for your config.json file:
 
 ```json
 {
-    "TOKEN": "TOKEN",
-    "GUILD_ID": "ID",
     "BOT_ID": "ID",
-    "ENV": "PATH",
     "DEBUG": true,
     "DEVELOPER_ID": "ID",
+    "ENV": "PATH",
+    "GUILD_ID": "ID",
+    "TOKEN": "TOKEN"
 }
 ```
 
@@ -92,7 +94,7 @@ Alternatively, to use environment variables, you can name them in the same way a
 
 > ⚠ Using environment variables will override the given values in the [JSON](./src/config.json) file.
 
-Given that certain project values, such as channel and emoji IDs, have been excluded, it becomes imperative for you to proactively engage by incorporating pertinent values. It is essential to populate the ensuing files with requisite values, as their absence will inevitably render them non-functional. You can find more information in the files themselves.
+> In certain files, specific sections have been redacted due to the inclusion of IDs. To enable the corresponding functionality of the bot, manual intervention is required. Detailed guidance on the required modifications can be found in the respective files listed below:
 
 [guildMemberAdd.js](./src/events/guildMemberAdd.js)\
 [guildMemberRemove.js](./src/events/guildMemberRemove.js)
