@@ -4,7 +4,7 @@
 // Dummy LanguageString to get more autocompletion (importing doesn't work for me for some reason)
 /* eslint-disable no-empty-function */
 class LanguageString extends String {
-	format() { }
+	format() { return this; }
 }
 /* eslint-enable no-empty-function */
 
