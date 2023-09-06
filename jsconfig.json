@@ -25,6 +25,9 @@
             "#modules/*": [
                 "./src/modules/*"
             ],
+            "#lib/*": [
+                "./src/lib/*"
+            ],
             "#stored/*": [
                 "./src/stored/*"
             ],

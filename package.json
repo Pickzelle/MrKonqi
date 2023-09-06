@@ -34,6 +34,7 @@
     "#events/*": "./src/events/*",
     "#modals/*": "./src/modals/*",
     "#modules/*": "./src/modules/*",
+    "#lib/*": "./src/lib/*",
     "#stored/*": "./src/stored/*"
   },
   "engines": {
