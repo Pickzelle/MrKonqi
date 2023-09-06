@@ -9,5 +9,9 @@ class LanguageString extends String {
 /* eslint-enable no-empty-function */
 
 module.exports = {
-	'something': new LanguageString(''),
+	'max-mem-cant-process': new LanguageString(''),
+	'detected-name-confict': new LanguageString(''),
+	'cant-find-package-query': new LanguageString(''),
+	'cant-find-package-query-in-repo': new LanguageString(''),
+	'select-package-to-show': new LanguageString(''),
 };

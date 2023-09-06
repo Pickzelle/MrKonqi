@@ -1,3 +1,7 @@
 {
-	"something": "test"
+	"max-mem-cant-process": "I'm currently running at max memory and therefore unable to handle your request. Please try again later.",
+	"detected-name-confict": "Name conflict detected!",
+	"cant-find-package-query": "I'm sorry, I couldn't find a package named **{0}** in the repos.",
+	"cant-find-package-query-in-repo": "I'm sorry, I couldn't find a package named **{0}** in the **{1}** repository.",
+	"select-package-to-show": "Please select which package you want to show.{1}\n{0}"
 }

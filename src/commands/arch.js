@@ -12,6 +12,8 @@ let embed = new EmbedBuilder();
 const STORED = 'stored';
 const { readdir, readFile } = require('node:fs/promises');
 const MEMLIMIT = 512;
+const LOCALE_LIB = require('#lib/locale.js');
+const getLocale = LOCALE_LIB.extra.getLocale;
 
 // -------------------------
 
@@ -245,10 +247,11 @@ module.exports = {
 	 * Execute the bot's command handling logic.
 	 *
 	 * @param {import('discord.js').Client} BOT - The Discord bot client
-	 * @param {import('sqlite3').Database} DATABASE - SQLite3 database
-	 * @param {import('discord.js').Interaction} interaction - A Discord interaction
+	 * @param {import('sqlite3').Database} DB - SQLite3 database
+	 * @param {import('discord.js').Interaction} Interaction - A Discord interaction
 	*/
 	async execute(BOT, DB, Interaction) {
+		const locale = getLocale(Interaction.locale);
 
 		const EPHEMERAL = Interaction.options.getBoolean('ephemeral') ?? true;
 		const QUERY = Interaction.options.getString('package');
@@ -264,7 +267,7 @@ module.exports = {
 
 			// Check if DrKonqi is over his memory limit of 512 MiB.
 			if (process.memoryUsage().rss / (1024 * 1024) > MEMLIMIT) {
-				return await Interaction.editReply('I\'m currently running at max memory and therefore unable to handle your request. Please try again later.');
+				return await Interaction.editReply(locale['max-mem-cant-process']);
 			}
 
 			try {
@@ -295,7 +298,7 @@ module.exports = {
 					packageFound = true;
 				}
 				else {
-					return await Interaction.editReply(`I'm sorry, I couldn't find a package named **${QUERY}** in the **${Repository}** repository.`);
+					return await Interaction.editReply(locale['cant-find-package-query-in-repo'].format(QUERY, Repository));
 				}
 
 			}
@@ -327,7 +330,7 @@ module.exports = {
 			}
 
 			if (!packageFound) {
-				return await Interaction.editReply({ content: `I'm sorry, I couldn't find a package named **${QUERY}** in the repos.` });
+				return await Interaction.editReply({ content: locale['cant-find-package-query'].format(QUERY) });
 			}
 			else if (PACKAGES.length >= 2) {
 
@@ -347,12 +350,13 @@ module.exports = {
 				}
 
 				embed
-					.setTitle('Name conflict detected!')
+					.setTitle(locale['detected-name-confict'])
 					.setColor('#1793d1')
-					.setThumbnail('attachment://archlinux.png');
-
-				if (DEPENDENCIES) embed.setDescription(`Please select which package you want to show.\u2007\n${description}`);
-				else embed.setDescription(`Please select which package you want to show.\n${description}`);
+					.setThumbnail('attachment://archlinux.png')
+					.setDescription(
+						locale['select-package-to-show']
+							.format(description, DEPENDENCIES ? '\u2007' : ''),
+					);
 
 				// ! This line causes discord.js to use `buffer.Blob`, which is considered a experimental feature in this node version
 				await Interaction.editReply({ content: '', embeds: [embed], files: [LOGO], components: [ROW] });
