@@ -36,4 +36,15 @@ module.exports = {
 	'cant-find-package-query': new LanguageString(''),
 	'cant-find-package-query-in-repo': new LanguageString(''),
 	'select-package-to-show': new LanguageString(''),
+
+	'commands-ephemeral-name': new LanguageString(''),
+	'commands-ephemeral-description': new LanguageString(''),
+
+	'command-arch-description': new LanguageString(''),
+	'command-arch-package-name': new LanguageString(''),
+	'command-arch-package-description': new LanguageString(''),
+	'command-arch-repository-name': new LanguageString(''),
+	'command-arch-repository-description': new LanguageString(''),
+	'command-arch-dependencies-name': new LanguageString(''),
+	'command-arch-dependencies-description': new LanguageString(''),
 };

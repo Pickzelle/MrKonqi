@@ -13,7 +13,7 @@ const STORED = 'stored';
 const { readdir, readFile } = require('node:fs/promises');
 const MEMLIMIT = 512;
 const LOCALE_LIB = require('#lib/locale.js');
-const getLocale = LOCALE_LIB.extra.getLocale;
+const { getLocale, mergeLocalesKey, getDefaultLocaleKey } = LOCALE_LIB.extra;
 
 // -------------------------
 
@@ -179,35 +179,20 @@ async function sendEmbed(Interaction, PACKAGE, DEPENDENCIES) {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('arch')
-		.setDescription('Performs a search in the Arch package database for packages')
-		.setDescriptionLocalizations({
-			'sv-SE': 'Utför en sökning i Archs paketförråd efter paket',
-			'es-ES': 'Hace una busqueda de paquetes en la base de datos de Arch',
-		})
+		.setDescription(getDefaultLocaleKey('command-arch-description'))
+		.setDescriptionLocalizations(mergeLocalesKey('command-arch-description'))
 		.addStringOption(option => option
-			.setName('package')
-			.setDescription('The package you\'re searching for')
+			.setName(getDefaultLocaleKey('command-arch-package-name'))
+			.setDescription(getDefaultLocaleKey('command-arch-package-description'))
 			.setRequired(true)
-			.setNameLocalizations({
-				'sv-SE': 'paket',
-				'es-ES': 'paquete',
-			})
-			.setDescriptionLocalizations({
-				'sv-SE': 'Paketet du vill söka efter',
-				'es-ES': 'El paquete que buscas',
-			}),
+			.setNameLocalizations(mergeLocalesKey('command-arch-package-name'))
+			.setDescriptionLocalizations(mergeLocalesKey('command-arch-package-description')),
 		)
 		.addStringOption(option => option
-			.setName('repository')
-			.setNameLocalizations({
-				'sv-SE': 'paketförråd',
-				'es-ES': 'repositorio',
-			})
-			.setDescription('Which repository to fetch from')
-			.setDescriptionLocalizations({
-				'sv-SE': 'Vilket paketförråd att söka igenom',
-				'es-ES': 'De que repositorio buscar',
-			})
+			.setName(getDefaultLocaleKey('command-arch-repository-name'))
+			.setNameLocalizations(mergeLocalesKey('command-arch-repository-name'))
+			.setDescription(getDefaultLocaleKey('command-arch-repository-description'))
+			.setDescriptionLocalizations(mergeLocalesKey('command-arch-repository-description'))
 			.addChoices(
 				{ name: 'Core', value: 'core' },
 				{ name: 'Core-Testing', value: 'core-testing' },
@@ -220,28 +205,16 @@ module.exports = {
 			),
 		)
 		.addBooleanOption(option => option
-			.setName('dependencies')
-			.setNameLocalizations({
-				'sv-SE': 'beroenden',
-				'es-ES': 'dependencias',
-			})
-			.setDescription('Whether or not to show dependencies for the given package')
-			.setDescriptionLocalizations({
-				'sv-SE': 'Huruvida beroenden för det givna paketet ska visas eller inte',
-				'es-ES': 'Si mostrar o no las dependencias del paquete',
-			}),
+			.setName(getDefaultLocaleKey('command-arch-dependencies-name'))
+			.setNameLocalizations(mergeLocalesKey('command-arch-dependencies-name'))
+			.setDescription(getDefaultLocaleKey('command-arch-dependencies-description'))
+			.setDescriptionLocalizations(mergeLocalesKey('command-arch-dependencies-description')),
 		)
 		.addBooleanOption(option => option
-			.setName('ephemeral')
-			.setNameLocalizations({
-				'sv-SE': 'efemär',
-				'es-ES': 'efímero',
-			})
-			.setDescription('Toggles whether or not this message should be ephemeral')
-			.setDescriptionLocalizations({
-				'sv-SE': 'Växlar om detta meddelande ska vara kortlivat eller inte',
-				'es-ES': 'Establece si este mensaje debería ser efímero',
-			}),
+			.setName(getDefaultLocaleKey('commands-ephemeral-name'))
+			.setNameLocalizations(mergeLocalesKey('commands-ephemeral-name'))
+			.setDescription(getDefaultLocaleKey('commands-ephemeral-description'))
+			.setDescriptionLocalizations(mergeLocalesKey('commands-ephemeral-description')),
 		),
 
 	/**
@@ -254,10 +227,10 @@ module.exports = {
 	async execute(BOT, DB, Interaction) {
 		const locale = getLocale(Interaction.locale);
 
-		const EPHEMERAL = Interaction.options.getBoolean('ephemeral') ?? true;
-		const QUERY = Interaction.options.getString('package');
-		const DEPENDENCIES = Interaction.options.getBoolean('dependencies');
-		let Repository = Interaction.options.getString('repository');
+		const EPHEMERAL = Interaction.options.getBoolean(getDefaultLocaleKey('command-ephermal-name')) ?? true;
+		const QUERY = Interaction.options.getString(getDefaultLocaleKey('command-arch-package-name'));
+		const DEPENDENCIES = Interaction.options.getBoolean(getDefaultLocaleKey('command-arch-dependencies-name'));
+		let Repository = Interaction.options.getString(getDefaultLocaleKey('command-arch-repository-name'));
 
 		await Interaction.deferReply({ ephemeral: EPHEMERAL });
 
