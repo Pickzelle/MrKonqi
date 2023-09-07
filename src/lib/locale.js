@@ -1,6 +1,8 @@
 const path = require('node:path');
 const fs = require('node:fs');
 
+const defaultLocale = 'en-US';
+
 const LOCALE_DIR = path.join(__dirname, '../..', 'locales');
 
 /**
@@ -48,6 +50,8 @@ for (const locale in locales) {
 	}
 }
 
+locales['default'] = locales[defaultLocale];
+
 /**
  * @param {keyof LocaleModel} key
  * @return {Object.<string, LanguageString>}
@@ -55,9 +59,18 @@ for (const locale in locales) {
 function mergeLocalesKey(key) {
 	const result = {};
 	for (const locale in locales) {
-		result[locale] = locales[locale][key];
+		if (locale === 'default' || !locales[locale][key]) continue;
+		result[locale] = locales[locale][key]?.toString();
 	}
 	return result;
+}
+
+/**
+ * @param {keyof LocaleModel} key
+ * @return {String}
+ */
+function getDefaultLocaleKey(key) {
+	return locales.default[key]?.toString();
 }
 
 // This is useless but gives autocompletion :P
@@ -74,6 +87,7 @@ module.exports = {
 	extra: {
 		LanguageString,
 		mergeLocalesKey,
+		getDefaultLocaleKey,
 		getLocale,
 	},
 };
