@@ -121,6 +121,7 @@ function addField(fieldName, dependencies, inline) {
  * @param {Boolean} DEPENDENCIES - The dependency boolean.
  */
 async function sendEmbed(Interaction, PACKAGE, DEPENDENCIES) {
+	const locale = getLocale(Interaction.locale);
 
 	const FIELDS = [];
 	let description = '';
@@ -130,38 +131,38 @@ async function sendEmbed(Interaction, PACKAGE, DEPENDENCIES) {
 		embed.setTitle(`${PACKAGE.BASE} ${PACKAGE.VERSION}`);
 	}
 
-	description += PACKAGE.ARCH ? `**Architecture:** ${PACKAGE.ARCH}\n` : '**Architecture:** any\n';
-	if (PACKAGE.REPOSITORY) description += `**Repository:** ${PACKAGE.REPOSITORY}\n`;
-	if (PACKAGE.DESC) description += `**Description:** ${PACKAGE.DESC}\n`;
-	if (PACKAGE.URL) description += `**Upstream URL:** ${PACKAGE.URL}\n`;
-	if (PACKAGE.LICENSE) description += `**License:** ${PACKAGE.LICENSE}\n`;
-	if (PACKAGE.PROVIDES) description += `**Provides:** ${PACKAGE.PROVIDES.map(item => `\`${item}\``).join(' ')}\n`;
-	if (PACKAGE.REPLACES) description += `**Replaces:** ${PACKAGE.REPLACES.map(item => `\`${item}\``).join(' ')}\n`;
-	if (PACKAGE.CONFLICTS) description += `**Replaces:** ${PACKAGE.CONFLICTS.map(item => `\`${item}\``).join(' ')}\n`;
-	if (PACKAGE.CSIZE) description += `**Package Size:** ${formatSize(PACKAGE.CSIZE)}\n`;
-	if (PACKAGE.ISIZE) description += `**Installed Size:** ${formatSize(PACKAGE.ISIZE)}\n`;
+	description += locale['architecture:'].format(PACKAGE.ARCH || 'any');
+	if (PACKAGE.REPOSITORY) description += locale['repository:'].format(PACKAGE.REPOSITORY);
+	if (PACKAGE.DESC) description += locale['description:'].format(PACKAGE.DESC);
+	if (PACKAGE.URL) description += locale['upstreamURL:'].format(PACKAGE.URL);
+	if (PACKAGE.LICENSE) description += locale['license:'].format(PACKAGE.LICENSE);
+	if (PACKAGE.PROVIDES) description += locale['provides:'].format(PACKAGE.PROVIDES.map(item => `\`${item}\``).join(' '));
+	if (PACKAGE.REPLACES) description += locale['replaces:'].format(PACKAGE.REPLACES.map(item => `\`${item}\``).join(' '));
+	if (PACKAGE.CONFLICTS) description += locale['replaces:'].format(PACKAGE.CONFLICTS.map(item => `\`${item}\``).join(' '));
+	if (PACKAGE.CSIZE) description += locale['packageSize:'].format(formatSize(PACKAGE.CSIZE));
+	if (PACKAGE.ISIZE) description += locale['installedSize:'].format(formatSize(PACKAGE.ISIZE));
 	if (PACKAGE.PACKAGER) {
 		const match = PACKAGE.PACKAGER.match(regex);
-		if (match) description += `**Packager:** ${match[1].trim()}\n`;
+		if (match) description += locale['packager:'].format(match[1].trim());
 	}
-	if (PACKAGE.SUBMITTER) description += `**Submitter:** ${PACKAGE.SUBMITTER}\n`;
-	if (PACKAGE.MAINTAINER) description += `**Maintainer:** ${PACKAGE.MAINTAINER}\n`;
-	if (PACKAGE.NUMVOTES) description += `**Votes:** ${PACKAGE.NUMVOTES}\n`;
-	if (PACKAGE.POPULARITY) description += `**Popularity:** ${PACKAGE.POPULARITY}\n`;
-	if (PACKAGE.FIRSTSUBMITTED) description += `**First Submitted:** <t:${PACKAGE.FIRSTSUBMITTED}:R>\n`;
-	if (PACKAGE.LASTMODIFIED) description += `**Last Updated:** <t:${PACKAGE.LASTMODIFIED}:R>\n`;
-	if (PACKAGE.BUILDDATE) description += `**Build Date:** <t:${PACKAGE.BUILDDATE}:R>\n`;
-	description += PACKAGE.OUTOFDATE == undefined ? '**Out-of-date:** no.\n' : `**Out-of-date:** <t:${PACKAGE.OUTOFDATE}:f>\n`;
+	if (PACKAGE.SUBMITTER) description += locale['submitter:'].format(PACKAGE.SUBMITTER);
+	if (PACKAGE.MAINTAINER) description += locale['maintainer:'].format(PACKAGE.MAINTAINER);
+	if (PACKAGE.NUMVOTES) description += locale['votes:'].format(PACKAGE.NUMVOTES);
+	if (PACKAGE.POPULARITY) description += locale['popularity:'].format(PACKAGE.POPULARITY);
+	if (PACKAGE.FIRSTSUBMITTED) description += locale['firstSubmitted:'].format(`<t:${PACKAGE.FIRSTSUBMITTED}:R>`);
+	if (PACKAGE.LASTMODIFIED) description += locale['lastUpdated:'].format(`<t:${PACKAGE.LASTMODIFIED}:R>`);
+	if (PACKAGE.BUILDDATE) description += locale['buildDate:'].format(`<t:${PACKAGE.BUILDDATE}:R>`);
+	description += locale['outOfDate:'].format(PACKAGE.OUTOFDATE ? 'no' : `<t:${PACKAGE.OUTOFDATE}:f>`);
 
 	if (DEPENDENCIES) {
-		if (PACKAGE.DEPENDS) FIELDS.push(addField('Dependencies', PACKAGE.DEPENDS, true));
-		if (PACKAGE.OPTDEPENDS) FIELDS.push(addField('Optional Dependencies', PACKAGE.OPTDEPENDS, true));
-		if (PACKAGE.MAKEDEPENDS) FIELDS.push(addField('Make Dependencies', PACKAGE.MAKEDEPENDS, true));
+		if (PACKAGE.DEPENDS) FIELDS.push(addField(locale['dependencies'], PACKAGE.DEPENDS, true));
+		if (PACKAGE.OPTDEPENDS) FIELDS.push(addField(locale['optionalDependencies'], PACKAGE.OPTDEPENDS, true));
+		if (PACKAGE.MAKEDEPENDS) FIELDS.push(addField(locale['makeDependencies'], PACKAGE.MAKEDEPENDS, true));
 	}
 
 	if (PACKAGE.REPOSITORY !== 'AUR') {
 		const { lastFetchTimestamp } = JSON.parse(await readFile(PATH.join(__dirname, '..', STORED, 'timestamp.json')));
-		FIELDS.push(addField('Last sync', `<t:${Math.round(lastFetchTimestamp / 1000)}:R>`, false));
+		FIELDS.push(addField(locale['lastSync'], `<t:${Math.round(lastFetchTimestamp / 1000)}:R>`, false));
 	}
 
 	embed
