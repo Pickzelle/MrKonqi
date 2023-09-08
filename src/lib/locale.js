@@ -18,7 +18,7 @@ class LanguageString extends String {
 		this.replace(/(?<=(?:^|[^\\])(?:\\\\)*)\{([0-9]+)\}/g, (_match, number) => {
 			try {
 				const index = parseInt(number);
-				return args[index] || '';
+				return args[index].replace(/\\/g, '\\\\') || '';
 			}
 			catch {
 				// Probably some error parsing the number, shouldn0t happen from that regex but who knows
