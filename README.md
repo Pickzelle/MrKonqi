@@ -115,9 +115,6 @@ Pull requests are welcome in case you want to contribute to the project. Any hel
 
 For general support about the bot, you can join the [TuxCord Discord server](https://discord.com/invite/HN8dYbDv2M).
 
-<iframe src="https://discord.com/widget?id=920283664707903568&theme=dark" width="533" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-
-
 ## Maintainers
 
 ### List of Maintainers
