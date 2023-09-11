@@ -37,7 +37,7 @@ MrKonqi is a Discord bot used for moderating the TuxCord Discord server. He has 
 - [axios](https://www.npmjs.com/package/axios) 1.4.0+
 
 > ⚠ Chalk 5 is ESM and therefore version 4 must be used.\
-⚠ npm's sqlite3 package provdies SQLite3 bindings for Node.js® meaning that sqlite needs to be installed on the system.
+⚠ npm's sqlite3 package requires SQLite to be installed on the system for Node.js® bindings.
 
 ```bash
 git clone https://github.com/Pickzelle/MrKonqi.git
@@ -61,7 +61,7 @@ npm install
 
 ### Configuration
 
-In the src directory of this repository, you'll find a [JSON](./src/config.json) file that governs the bot's behavior. To configure the bot, you can either modify the JSON file directly or utilize environment variables for configuration. The following values can be defined using either approach:
+In the src directory of this repository, you'll find a [JSON](./src/config.template.json) file that governs the bot's behavior. To configure the bot, you can either modify the JSON file directly or utilize environment variables for configuration. The following values can be defined using either approach:
 
 | Example | Description |
 | --------------------- | ----------- |

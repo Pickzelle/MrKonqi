@@ -59,8 +59,13 @@ module.exports = {
 
 				console.log(green(`[Interaction] - A modal event calling ${Interaction.customId} was executed.`));
 
-				const MODAL = BOT.modals.get(Interaction.customId);
-				if (MODAL) MODAL.execute(BOT, Interaction);
+				let modal;
+
+				// FIXME Improve so we don't send to the wrong modal handler.
+				if (Interaction.customId.includes('decrypt')) modal = BOT.modals.get('decrypt');
+				else modal = BOT.modals.get(Interaction.customId);
+
+				if (modal) modal.execute(BOT, Interaction);
 
 			}
 		}
@@ -72,7 +77,7 @@ module.exports = {
 				return await Interaction.reply({ content: content, ephemeral: true }).catch(err => console.log(red(err)));
 			}
 			catch {
-				return await Interaction.editReply({ content: content, ephemeral: true }).catch(err => console.log(red(err)));
+				return Interaction.editReply({ content: content, ephemeral: true }).catch(err => console.log(red(err)));
 			}
 		}
 
