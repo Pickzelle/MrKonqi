@@ -67,7 +67,7 @@ module.exports = {
 			.setDescription('The id of the account you want to filter with')
 			.setDescriptionLocalizations({
 				'sv-SE': 'ID:t för det konto som du vill filtrera med',
-				'es-ES': 'ID de la cuenta que quieres filtar'
+				'es-ES': 'ID de la cuenta que quieres filtar',
 			}),
 		)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
