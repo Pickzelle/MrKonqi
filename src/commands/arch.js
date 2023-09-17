@@ -131,38 +131,38 @@ async function sendEmbed(Interaction, PACKAGE, DEPENDENCIES) {
 		embed.setTitle(`${PACKAGE.BASE} ${PACKAGE.VERSION}`);
 	}
 
-	description += locale['architecture:'].format(PACKAGE.ARCH || 'any');
-	if (PACKAGE.REPOSITORY) description += locale['repository:'].format(PACKAGE.REPOSITORY);
-	if (PACKAGE.DESC) description += locale['description:'].format(PACKAGE.DESC);
-	if (PACKAGE.URL) description += locale['upstreamURL:'].format(PACKAGE.URL);
-	if (PACKAGE.LICENSE) description += locale['license:'].format(PACKAGE.LICENSE);
-	if (PACKAGE.PROVIDES) description += locale['provides:'].format(PACKAGE.PROVIDES.map(item => `\`${item}\``).join(' '));
-	if (PACKAGE.REPLACES) description += locale['replaces:'].format(PACKAGE.REPLACES.map(item => `\`${item}\``).join(' '));
-	if (PACKAGE.CONFLICTS) description += locale['replaces:'].format(PACKAGE.CONFLICTS.map(item => `\`${item}\``).join(' '));
-	if (PACKAGE.CSIZE) description += locale['packageSize:'].format(formatSize(PACKAGE.CSIZE));
-	if (PACKAGE.ISIZE) description += locale['installedSize:'].format(formatSize(PACKAGE.ISIZE));
+	description += locale['architecture:'].format(PACKAGE.ARCH || 'any').toString();
+	if (PACKAGE.REPOSITORY) description += locale['repository:'].format(PACKAGE.REPOSITORY).toString();
+	if (PACKAGE.DESC) description += locale['description:'].format(PACKAGE.DESC).toString();
+	if (PACKAGE.URL) description += locale['upstreamURL:'].format(PACKAGE.URL).toString();
+	if (PACKAGE.LICENSE) description += locale['license:'].format(PACKAGE.LICENSE).toString();
+	if (PACKAGE.PROVIDES) description += locale['provides:'].format(PACKAGE.PROVIDES.map(item => `\`${item}\``).join(' ')).toString();
+	if (PACKAGE.REPLACES) description += locale['replaces:'].format(PACKAGE.REPLACES.map(item => `\`${item}\``).join(' ')).toString();
+	if (PACKAGE.CONFLICTS) description += locale['replaces:'].format(PACKAGE.CONFLICTS.map(item => `\`${item}\``).join(' ')).toString();
+	if (PACKAGE.CSIZE) description += locale['packageSize:'].format(formatSize(PACKAGE.CSIZE)).toString();
+	if (PACKAGE.ISIZE) description += locale['installedSize:'].format(formatSize(PACKAGE.ISIZE)).toString();
 	if (PACKAGE.PACKAGER) {
 		const match = PACKAGE.PACKAGER.match(regex);
-		if (match) description += locale['packager:'].format(match[1].trim());
+		if (match) description += locale['packager:'].format(match[1].trim()).toString();
 	}
-	if (PACKAGE.SUBMITTER) description += locale['submitter:'].format(PACKAGE.SUBMITTER);
-	if (PACKAGE.MAINTAINER) description += locale['maintainer:'].format(PACKAGE.MAINTAINER);
-	if (PACKAGE.NUMVOTES) description += locale['votes:'].format(PACKAGE.NUMVOTES);
-	if (PACKAGE.POPULARITY) description += locale['popularity:'].format(PACKAGE.POPULARITY);
-	if (PACKAGE.FIRSTSUBMITTED) description += locale['firstSubmitted:'].format(`<t:${PACKAGE.FIRSTSUBMITTED}:R>`);
-	if (PACKAGE.LASTMODIFIED) description += locale['lastUpdated:'].format(`<t:${PACKAGE.LASTMODIFIED}:R>`);
-	if (PACKAGE.BUILDDATE) description += locale['buildDate:'].format(`<t:${PACKAGE.BUILDDATE}:R>`);
-	description += locale['outOfDate:'].format(PACKAGE.OUTOFDATE ? 'no' : `<t:${PACKAGE.OUTOFDATE}:f>`);
+	if (PACKAGE.SUBMITTER) description += locale['submitter:'].format(PACKAGE.SUBMITTER).toString();
+	if (PACKAGE.MAINTAINER) description += locale['maintainer:'].format(PACKAGE.MAINTAINER).toString();
+	if (PACKAGE.NUMVOTES) description += locale['votes:'].format(PACKAGE.NUMVOTES).toString();
+	if (PACKAGE.POPULARITY) description += locale['popularity:'].format(PACKAGE.POPULARITY).toString();
+	if (PACKAGE.FIRSTSUBMITTED) description += locale['firstSubmitted:'].format(`<t:${PACKAGE.FIRSTSUBMITTED}:R>`).toString();
+	if (PACKAGE.LASTMODIFIED) description += locale['lastUpdated:'].format(`<t:${PACKAGE.LASTMODIFIED}:R>`).toString();
+	if (PACKAGE.BUILDDATE) description += locale['buildDate:'].format(`<t:${PACKAGE.BUILDDATE}:R>`).toString();
+	description += locale['outOfDate:'].format(PACKAGE.OUTOFDATE ? `<t:${PACKAGE.OUTOFDATE}:f>` : 'no').toString();
 
 	if (DEPENDENCIES) {
-		if (PACKAGE.DEPENDS) FIELDS.push(addField(locale['dependencies'], PACKAGE.DEPENDS, true));
-		if (PACKAGE.OPTDEPENDS) FIELDS.push(addField(locale['optionalDependencies'], PACKAGE.OPTDEPENDS, true));
-		if (PACKAGE.MAKEDEPENDS) FIELDS.push(addField(locale['makeDependencies'], PACKAGE.MAKEDEPENDS, true));
+		if (PACKAGE.DEPENDS) FIELDS.push(addField(locale['dependencies'].toString(), PACKAGE.DEPENDS, true));
+		if (PACKAGE.OPTDEPENDS) FIELDS.push(addField(locale['optionalDependencies'].toString(), PACKAGE.OPTDEPENDS, true));
+		if (PACKAGE.MAKEDEPENDS) FIELDS.push(addField(locale['makeDependencies'].toString(), PACKAGE.MAKEDEPENDS, true));
 	}
 
 	if (PACKAGE.REPOSITORY !== 'AUR') {
 		const { lastFetchTimestamp } = JSON.parse(await readFile(PATH.join(__dirname, '..', STORED, 'timestamp.json')));
-		FIELDS.push(addField(locale['lastSync'], `<t:${Math.round(lastFetchTimestamp / 1000)}:R>`, false));
+		FIELDS.push(addField(locale['lastSync'].toString(), `<t:${Math.round(lastFetchTimestamp / 1000)}:R>`, false));
 	}
 
 	embed
@@ -241,7 +241,7 @@ module.exports = {
 
 			// Check if DrKonqi is over his memory limit of 512 MiB.
 			if (process.memoryUsage().rss / (1024 * 1024) > MEMLIMIT) {
-				return await Interaction.editReply(locale['max-mem-cant-process']);
+				return await Interaction.editReply(locale['max-mem-cant-process'].toString());
 			}
 
 			try {
@@ -272,7 +272,7 @@ module.exports = {
 					packageFound = true;
 				}
 				else {
-					return await Interaction.editReply(locale['cant-find-package-query-in-repo'].format(QUERY, Repository));
+					return await Interaction.editReply(locale['cant-find-package-query-in-repo'].format(QUERY, Repository).toString());
 				}
 
 			}
@@ -304,7 +304,7 @@ module.exports = {
 			}
 
 			if (!packageFound) {
-				return await Interaction.editReply({ content: locale['cant-find-package-query'].format(QUERY) });
+				return await Interaction.editReply({ content: locale['cant-find-package-query'].format(QUERY).toString() });
 			}
 			else if (PACKAGES.length >= 2) {
 
@@ -324,12 +324,12 @@ module.exports = {
 				}
 
 				embed
-					.setTitle(locale['detected-name-confict'])
+					.setTitle(locale['detected-name-confict'].toString())
 					.setColor('#1793d1')
 					.setThumbnail('attachment://archlinux.png')
 					.setDescription(
 						locale['select-package-to-show']
-							.format(description, DEPENDENCIES ? '\u2007' : ''),
+							.format(description, DEPENDENCIES ? '\u2007' : '').toString(),
 					);
 
 				// ! This line causes discord.js to use `buffer.Blob`, which is considered a experimental feature in this node version

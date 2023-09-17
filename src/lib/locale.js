@@ -10,12 +10,12 @@ const LOCALE_DIR = path.join(__dirname, '../..', 'locales');
  * @extends {String}
  */
 class LanguageString extends String {
-	format([...args]) {
+	format(...args) {
 		// You either trust this regex works or read this explanation
 
 		// Ik this is weird, basically is (?<=      (?:        ^     |        [^\\]             )    (?:      \\\\)   *     )      \{ (   [0-9]             +                 ) \}
 		// So that's                      (look for (a start of line or anythinng that isn't "\") followed by "\\" any times) and "{"   a number   a positive amount of times  "}"
-		this.replace(/(?<=(?:^|[^\\])(?:\\\\)*)\{([0-9]+)\}/g, (_match, number) => {
+		return this.replace(/(?<=(?:^|[^\\])(?:\\\\)*)\{([0-9]+)\}/g, (_match, number) => {
 			try {
 				const index = parseInt(number);
 				return args[index].replace(/\\/g, '\\\\') || '';
