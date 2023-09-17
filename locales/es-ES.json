@@ -42,5 +42,12 @@
 	"clear-command-description": "Borra dicha cantidad de mensajes en un canal",
 	"clear-command-ammount-name": "cantidad",
 	"clear-command-ammount-description": "Cantidad de mensajes que borrar",
-	"clear-command-id-description": "ID de la cuenta que quieres filtar"
+	"clear-command-id-description": "ID de la cuenta que quieres filtar",
+	"clear-command-over-300-messages": "Perdón, pero no borraré mas de `300` mensajes.",
+	"clear-command-no-more-messages": "No se encontraron mas mensajes...",
+	"clear-command-error-race-condition": "Error de permisos detectados. Probablemente una conción de carrera.",
+	"clear-command-could-delete-from": "No pude borrar inngún mensaje desde {0}",
+	"clear-command-deleted-messages-from": "Borrados {0} mensajes de {1}",
+	"clear-command-couldnt-delete-in-channel": "No pude borrar ningún mensaje en este canal.",
+	"clear-command-deleted-messages": "Borrados {0} mensajes."
 }
