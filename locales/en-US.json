@@ -36,6 +36,18 @@
 	"command-arch-repository-name": "repository",
 	"command-arch-repository-description": "Which repository to fetch from",
 	"command-arch-dependencies-name": "dependencies",
-	"command-arch-dependencies-description": "Whether or not to show dependencies for the given package"
+	"command-arch-dependencies-description": "Whether or not to show dependencies for the given package",
 
+	"clear-command-name": "clear",
+	"clear-command-description": "Clears a given amount of messages in a channel",
+	"clear-command-ammount-name": "amount",
+	"clear-command-ammount-description": "The amount of messages to delete",
+	"clear-command-id-description": "The id of the account you want to filter with",
+	"clear-command-over-300-messages": "Sorry, but I will not handle deletion requests with an amount over `300`.",
+	"clear-command-no-more-messages": "No more messages could be found...",
+	"clear-command-error-race-condition": "Permission error detected. Probably race condition.",
+	"clear-command-could-delete-from": "I couldn't delete any messages from {0}",
+	"clear-command-deleted-messages-from": "Deleted {0} messages from {1}",
+	"clear-command-couldnt-delete-in-channel": "I wasn't able to delete any messages in this channel.",
+	"clear-command-deleted-messages": "Deleted {0} messages."
 }

@@ -36,5 +36,11 @@
 	"command-arch-repository-name": "repositorio",
 	"command-arch-repository-description": "En que repositorio buscar",
 	"command-arch-dependencies-name": "dependencias",
-	"command-arch-dependencies-description": "Si mostrar o no las dependencias del paquete"
+	"command-arch-dependencies-description": "Si mostrar o no las dependencias del paquete",
+
+	"clear-command-name": "borrar",
+	"clear-command-description": "Borra dicha cantidad de mensajes en un canal",
+	"clear-command-ammount-name": "cantidad",
+	"clear-command-ammount-description": "Cantidad de mensajes que borrar",
+	"clear-command-id-description": "ID de la cuenta que quieres filtar"
 }

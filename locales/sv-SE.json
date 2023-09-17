@@ -36,5 +36,11 @@
 	"command-arch-repository-name": "fjärrförråd",
 	"command-arch-repository-description": "Vilket fjärrförråd att hämta från",
 	"command-arch-dependencies-name": "beroenden",
-	"command-arch-dependencies-description": "Om beroenden för det angivna paketet ska visas eller inte"
+	"command-arch-dependencies-description": "Om beroenden för det angivna paketet ska visas eller inte",
+
+	"clear-command-name": "rensa",
+	"clear-command-description": "rensar ett givet nummer av meddelanden i en kanal",
+	"clear-command-ammount-name": "mängd",
+	"clear-command-ammount-description": "Antalet meddelanden att radera",
+	"clear-command-id-description": "ID:t för det konto som du vill filtrera med"
 }

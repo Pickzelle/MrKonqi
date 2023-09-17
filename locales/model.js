@@ -47,4 +47,17 @@ module.exports = {
 	'command-arch-repository-description': new LanguageString(''),
 	'command-arch-dependencies-name': new LanguageString(''),
 	'command-arch-dependencies-description': new LanguageString(''),
+
+	'clear-command-name': new LanguageString(''),
+	'clear-command-description': new LanguageString(''),
+	'clear-command-ammount-name': new LanguageString(''),
+	'clear-command-ammount-description': new LanguageString(''),
+	'clear-command-id-description': new LanguageString(''),
+	'clear-command-over-300-messages': new LanguageString(''),
+	'clear-command-no-more-messages': new LanguageString(''),
+	'clear-command-error-race-condition': new LanguageString(''),
+	'clear-command-couldnt-delete-from': new LanguageString(''),
+	'clear-command-deleted-messages-from': new LanguageString(''),
+	'clear-command-couldnt-delete-in-channel': new LanguageString(''),
+	'clear-command-deleted-messages': new LanguageString(''),
 };
