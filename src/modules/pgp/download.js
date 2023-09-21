@@ -7,6 +7,7 @@ async function download(url) {
 	return new Promise((resolve) => {
 
 		try {
+
 			axios.get(url, { responseType: 'stream' }).then(response => {
 
 				const fileStream = response.data;
@@ -26,14 +27,12 @@ async function download(url) {
 
 			});
 
-
 		}
 		catch (e) {
 			console.log(e);
 		}
 
 	});
-
 }
 
 module.exports = download;
