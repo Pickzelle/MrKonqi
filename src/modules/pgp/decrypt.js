@@ -1,4 +1,4 @@
-const openpgp = require('openpgp');
+const OpenPGP = require('openpgp');
 const { readFile } = require('node:fs/promises');
 
 /**
@@ -21,9 +21,9 @@ async function decrypt(args) {
 			? args.message
 			: await readFile(args.tmpFile, 'ascii');
 
-		const message = await openpgp.readMessage({ armoredMessage: encryptedData });
+		const message = await OpenPGP.readMessage({ armoredMessage: encryptedData });
 
-		const { data } = await openpgp.decrypt({
+		const { data } = await OpenPGP.decrypt({
 			message,
 			format: 'binary',
 			passwords: args.passphrase ? args.passphrase : 'TuxCord',
