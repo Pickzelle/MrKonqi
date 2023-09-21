@@ -1,19 +1,25 @@
 module.exports = {
 	name: 'bugReport',
 
-	async execute(bot, interaction) {
+	/**
+	 * MrKonqi's bug report logic.
+	 *
+	 * @param {import('discord.js').Client} Bot - The Discord bot client
+	 * @param {import('discord.js').Interaction} Interaction - A Discord interaction
+	*/
+	async execute(Bot, Interaction) {
 
-		const TITLE = interaction.fields.getTextInputValue('title');
-		const DESCRIPTION = interaction.fields.getTextInputValue('description');
-		const SEVERITY = interaction.fields.getTextInputValue('severity');
+		const Title = Interaction.fields.getTextInputValue('title');
+		const Description = Interaction.fields.getTextInputValue('description');
+		const Severity = Interaction.fields.getTextInputValue('severity');
 
 		console.log({
-			TITLE,
-			DESCRIPTION,
-			SEVERITY,
+			Title,
+			Description,
+			Severity,
 		});
 
-		await interaction.reply({ content: 'Your bug report has been shared with the developer. Thanks for making me better!', ephemeral: true });
+		await Interaction.reply({ content: 'Your bug report has been shared with the developer. Thanks for making me better!', ephemeral: true });
 
 	},
 };
