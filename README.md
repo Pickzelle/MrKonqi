@@ -30,7 +30,7 @@ MrKonqi is a Discord bot used for moderating the TuxCord Discord server. He has 
 
 ### Requirements
 
-- [node.js](https://nodejs.org/) v16.11.0+
+- [node.js](https://nodejs.org/) v18.17.1+
 - [discord.js](https://www.npmjs.com/package/discord.js) v14
 - [chalk](https://www.npmjs.com/package/chalk) 4.1.2
 - [sqlite3](https://www.npmjs.com/package/sqlite3) 5.1.6+
@@ -55,7 +55,7 @@ npm install
 
 > ⓘ nvm is a package used to manage versions of Node.js®. ([Install instructions](https://github.com/nvm-sh/nvm#installing-and-updating))\
 > ⓘ ESLint can assist you in adhering to the same development ruleset as me. ([Install instructions](https://github.com/eslint/eslint#installation-and-usage))\
-> ⓘ dotenv is a npm module used to load env files. 
+> ⓘ dotenv is a npm module used to load env files.
 
 > ⚠ These are optional packages and not required for the bot to work.
 
@@ -92,7 +92,7 @@ Alternatively, to use environment variables, you can name them in the same way a
 > ⓘ ENV and DEBUG are optional values and not required for the bot to function.\
 > ⓘ Meanwhile, DEVELOPER\_ID must be specified due to some commands being developer-only.
 
-> ⚠ Using environment variables will override the given values in the [JSON](./src/config.json) file.
+> ⚠ Using environment variables will override the given values in the [JSON](./src/config.template.json) file.
 
 > In certain files, specific sections have been redacted due to the inclusion of IDs. To enable the corresponding functionality of the bot, manual intervention is required. Detailed guidance on the required modifications can be found in the respective files listed below:
 
