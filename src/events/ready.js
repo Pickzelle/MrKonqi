@@ -7,9 +7,11 @@
 const { ActivityType } = require('discord.js');
 const { GUILD_ID } = require('../config.json');
 const { green } = require('chalk');
+const { readFileSync } = require('node:fs');
+const Path = require('node:path');
 
-// Current version of the bot
-const Version = '1.0.0';
+// Reads the package.json to get the version of the bot.
+const Version = JSON.parse(readFileSync(Path.join(__dirname, '../../package.json'))).version;
 
 // Array of status messages and their corresponding activity types
 const Statuses = [
