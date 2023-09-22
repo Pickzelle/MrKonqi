@@ -3,22 +3,22 @@
  * @module threadDelete
  * @see {@link https://discord.js.org/#/docs/discord.js/main/class/Client?scrollTo=e-threadDelete}
  */
-const PATH = require('path');
-const { deleteEntry } = require(PATH.join(__dirname, '..', 'modules', 'database.js'));
+const Path = require('path');
+const { deleteEntry } = require(Path.join(__dirname, '..', 'modules', 'database.js'));
 
 module.exports = {
 	name: 'threadDelete',
 	once: false,
 	/**
-	 * Execute the bot's event handling logic.
+	 * MrKonqi's thread deletion logic.
 	 *
-	 * @param {import('discord.js').Client} BOT - The Discord bot client
-	 * @param {import('sqlite3').Database} DATABASE - SQLite3 database
+	 * @param {import('discord.js').Client} Bot - The Discord bot client
+	 * @param {import('sqlite3').Database} Database - SQLite3 database
 	 * @param {import('discord.js').ThreadChannel} thread - A Discord thread channel
 	 */
-	async execute(BOT, DATABASE, thread) {
+	async execute(Bot, Database, thread) {
 
-		deleteEntry(BOT, DATABASE, 'suggestions', thread).catch(err => {
+		deleteEntry(Bot, Database, 'suggestions', thread).catch(err => {
 			console.log(err);
 		});
 

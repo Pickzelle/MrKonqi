@@ -7,12 +7,13 @@ module.exports = {
 	name: 'messageCreate',
 	once: false,
 	/**
-	 * Execute the bot's event handling logic.
-	 * @param {import('discord.js').Client} BOT - The Discord bot client
-	 * @param {import('sqlite3').Database} DATABASE - SQLite3 database
+	 * MrKonqi's message handling logic.
+	 *
+	 * @param {import('discord.js').Client} Bot - The Discord bot client
+	 * @param {import('sqlite3').Database} Database - SQLite3 database
 	 * @param {import('discord.js').Message} message - A Discord message
 	 */
-	execute(BOT, DATABASE, message) {
+	execute(Bot, Database, message) {
 
 		if (message.channel.type === 1) {
 

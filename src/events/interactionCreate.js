@@ -8,13 +8,13 @@ const { red, green } = require('chalk');
 module.exports = {
 	name: 'interactionCreate',
 	/**
-	 * Execute the bot's event handling logic.
+	 * Execute MrKonqi's interaction handling logic.
 	 *
-	 * @param {import('discord.js').Client} BOT - The Discord bot client
-	 * @param {import('sqlite3').Database} DATABASE - SQLite3 database
-	 * @param {import('discord.js').Interaction} interaction - A Discord interaction
+	 * @param {import('discord.js').Client} Bot - The Discord bot client
+	 * @param {import('sqlite3').Database} Database - SQLite3 database
+	 * @param {import('discord.js').Interaction} Interaction - A Discord interaction
 	 */
-	async execute(BOT, DATABASE, Interaction) {
+	async execute(Bot, Database, Interaction) {
 
 		const { commandName } = Interaction;
 		let content = '';
@@ -22,27 +22,27 @@ module.exports = {
 		try {
 			if (Interaction.isChatInputCommand()) {
 
-				const COMMAND = Interaction.client.commands.get(commandName);
+				const Command = Interaction.client.commands.get(commandName);
 				console.log(green(`[Interaction] - A function in ${commandName} was called.`));
 
-				if (!COMMAND) {
+				if (!Command) {
 					console.log(red(`Outdated command ran in ${Interaction.guild.name} (${Interaction.guild.id}), please consider updating this!`));
 					content = 'This command\'s settings is outdated. Please contact the maintainer about updating it.';
 				}
 				else {
 					content = 'There was an error while executing this command!';
-					await COMMAND.execute(BOT, DATABASE, Interaction);
+					await Command.execute(Bot, Database, Interaction);
 				}
 			}
 			else if (Interaction.isButton()) {
 
 				let button;
-				const REGEX = /^[a-zA-Z-]+ \| \d+$/g;
+				const Regex = /^[a-zA-Z-]+ \| \d+$/g;
 
-				const MATCH = Interaction.customId.match(REGEX);
+				const Match = Interaction.customId.match(Regex);
 
-				if (MATCH) button = BOT.buttons.get('arch');
-				else button = BOT.buttons.get(Interaction.customId);
+				if (Match) button = Bot.buttons.get('arch');
+				else button = Bot.buttons.get(Interaction.customId);
 
 				console.log(green(`[Interaction] - ${Interaction.customId} was executed.`));
 
@@ -52,7 +52,7 @@ module.exports = {
 				}
 				else {
 					content = 'Internal error detected, please contact the maintainer!';
-					await button.execute(BOT, Interaction);
+					await button.execute(Bot, Interaction);
 				}
 			}
 			else if (Interaction.isModalSubmit()) {
@@ -62,10 +62,10 @@ module.exports = {
 				let modal;
 
 				// FIXME Improve so we don't send to the wrong modal handler.
-				if (Interaction.customId.includes('decrypt')) modal = BOT.modals.get('decrypt');
-				else modal = BOT.modals.get(Interaction.customId);
+				if (Interaction.customId.includes('decrypt')) modal = Bot.modals.get('decrypt');
+				else modal = Bot.modals.get(Interaction.customId);
 
-				if (modal) modal.execute(BOT, Interaction);
+				if (modal) modal.execute(Bot, Interaction);
 
 			}
 		}
@@ -79,6 +79,7 @@ module.exports = {
 			catch {
 				return Interaction.editReply({ content: content, ephemeral: true }).catch(err => console.log(red(err)));
 			}
+
 		}
 
 	},
