@@ -9,20 +9,20 @@ const { EmbedBuilder, UserFlags } = require('discord.js');
  * Formats a Unix timestamp into a custom string format.
  *
  * @param {number} timestamp - The Unix timestamp to be formatted.
- * @param {string} USER - The username associated with the formatting.
+ * @param {string} User - The username associated with the formatting.
  * @returns {string} The formatted timestamp string.
  */
-function formatUnixTimestamp(timestamp, USER) {
-	const DATE = new Date(timestamp * 1000);
+function formatUnixTimestamp(timestamp, User) {
+	const Date = new Date(timestamp * 1000);
 
-	const YEAR = DATE.getFullYear();
-	const MONTH = String(DATE.getMonth() + 1).padStart(2, '0');
-	const DAY = String(DATE.getDate()).padStart(2, '0');
-	const HOURS = String(DATE.getHours()).padStart(2, '0');
-	const MINUTES = String(DATE.getMinutes()).padStart(2, '0');
-	const SECONDS = String(DATE.getSeconds()).padStart(2, '0');
+	const Year = Date.getFullYear();
+	const Month = String(Date.getMonth() + 1).padStart(2, '0');
+	const Day = String(Date.getDate()).padStart(2, '0');
+	const Hours = String(Date.getHours()).padStart(2, '0');
+	const Minutes = String(Date.getMinutes()).padStart(2, '0');
+	const Seconds = String(Date.getSeconds()).padStart(2, '0');
 
-	return `> ${YEAR}-${MONTH}-${DAY}T${HOURS}:${MINUTES}:${SECONDS} /TuxCord ${USER} CREATE`;
+	return `> ${Year}-${Month}-${Day}T${Hours}:${Minutes}:${Seconds} /TuxCord ${User} CREATE`;
 }
 
 module.exports = {
@@ -31,64 +31,64 @@ module.exports = {
 	/**
 	 * Execute the bot's event handling logic.
 	 *
-	 * @param {import('discord.js').Client} BOT
-	 * @param {import('sqlite3').Database} DATABASE - SQLite3 database
+	 * @param {import('discord.js').Client} Bot
+	 * @param {import('sqlite3').Database} Database - SQLite3 database
 	 * @param {import('discord.js').GuildMember} member
 	 */
-	execute(BOT, DATABASE, member) {
+	execute(Bot, Database, member) {
 
 		// FIXME Add emoji IDs here.
 
-		const FLAG = [];
-		const USER = member.user;
-		const GUILD = BOT.guilds.cache.get('');
-		const EMOJI_DISCORD_EMPLOYEE = GUILD.emojis.cache.get('');
-		const EMOJI_PARTNERED_SERVER_OWNER = GUILD.emojis.cache.get('');
-		const EMOJI_HYPESQUAD_EVENTS = GUILD.emojis.cache.get('');
-		const EMOJI_BUG_HUNTER_LEVEL_1 = GUILD.emojis.cache.get('');
-		const EMOJI_HOUSE_BRAVERY = GUILD.emojis.cache.get('');
-		const EMOJI_HOUSE_BRILLIANCE = GUILD.emojis.cache.get('');
-		const EMOJI_HOUSE_BALANCE = GUILD.emojis.cache.get('');
-		const EMOJI_EARLY_SUPPORTER = GUILD.emojis.cache.get('');
-		const EMOJI_BUG_HUNTER_LEVEL_2 = GUILD.emojis.cache.get('');
-		const EMOJI_VERIFIED_BOT = GUILD.emojis.cache.get('');
-		const EMOJI_EARLY_VERIFIED_BOT_DEVELOPER = GUILD.emojis.cache.get('');
-		const EMOJI_MODERATOR = GUILD.emojis.cache.get('');
-		const EMOJI_ACTIVE_DEVELOPER = GUILD.emojis.cache.get('');
-		const EMOJI_BOT = GUILD.emojis.cache.get('');
+		const Flag = [];
+		const User = member.user;
+		const Guild = Bot.guilds.cache.get('');
+		const EmojiDiscordEmployee = Guild.emojis.cache.get('');
+		const EmojiPartneredServerOwner = Guild.emojis.cache.get('');
+		const EmojiHypesquadEvents = Guild.emojis.cache.get('');
+		const EmojiBugHunterLevel1 = Guild.emojis.cache.get('');
+		const EmojiHouseBravery = Guild.emojis.cache.get('');
+		const EmojiHouseBrilliance = Guild.emojis.cache.get('');
+		const EmojiHouseBalance = Guild.emojis.cache.get('');
+		const EmojiEarlySupporter = Guild.emojis.cache.get('');
+		const EmojiBugHunterLevel2 = Guild.emojis.cache.get('');
+		const EmojiVerifiedBot = Guild.emojis.cache.get('');
+		const EmojiEarlyVerifiedBotDeveloper = Guild.emojis.cache.get('');
+		const EmojiModerator = Guild.emojis.cache.get('');
+		const EmojiActiveDeveloper = Guild.emojis.cache.get('');
+		const EmojiBot = Guild.emojis.cache.get('');
 
-		if (USER.flags.has(UserFlags.Staff)) FLAG.push(EMOJI_DISCORD_EMPLOYEE);
-		if (USER.flags.has(UserFlags.Partner)) FLAG.push(EMOJI_PARTNERED_SERVER_OWNER);
-		if (USER.flags.has(UserFlags.Hypesquad)) FLAG.push(EMOJI_HYPESQUAD_EVENTS);
-		if (USER.flags.has(UserFlags.BugHunterLevel1)) FLAG.push(EMOJI_BUG_HUNTER_LEVEL_1);
-		if (USER.flags.has(UserFlags.HypeSquadOnlineHouse1)) FLAG.push(EMOJI_HOUSE_BRAVERY);
-		if (USER.flags.has(UserFlags.HypeSquadOnlineHouse2)) FLAG.push(EMOJI_HOUSE_BRILLIANCE);
-		if (USER.flags.has(UserFlags.HypeSquadOnlineHouse3)) FLAG.push(EMOJI_HOUSE_BALANCE);
-		if (USER.flags.has(UserFlags.PremiumEarlySupporter)) FLAG.push(EMOJI_EARLY_SUPPORTER);
-		if (USER.flags.has(UserFlags.BugHunterLevel2)) FLAG.push(EMOJI_BUG_HUNTER_LEVEL_2);
+		if (User.flags.has(UserFlags.Staff)) Flag.push(EmojiDiscordEmployee);
+		if (User.flags.has(UserFlags.Partner)) Flag.push(EmojiPartneredServerOwner);
+		if (User.flags.has(UserFlags.Hypesquad)) Flag.push(EmojiHypesquadEvents);
+		if (User.flags.has(UserFlags.BugHunterLevel1)) Flag.push(EmojiBugHunterLevel1);
+		if (User.flags.has(UserFlags.HypeSquadOnlineHouse1)) Flag.push(EmojiHouseBravery);
+		if (User.flags.has(UserFlags.HypeSquadOnlineHouse2)) Flag.push(EmojiHouseBrilliance);
+		if (User.flags.has(UserFlags.HypeSquadOnlineHouse3)) Flag.push(EmojiHouseBalance);
+		if (User.flags.has(UserFlags.PremiumEarlySupporter)) Flag.push(EmojiEarlySupporter);
+		if (User.flags.has(UserFlags.BugHunterLevel2)) Flag.push(EmojiBugHunterLevel2);
 
-		if (USER.bot) {
-			if (USER.flags.has(UserFlags.VerifiedBot)) FLAG.push(EMOJI_VERIFIED_BOT);
-			else FLAG.push(EMOJI_BOT);
+		if (User.bot) {
+			if (User.flags.has(UserFlags.VerifiedBot)) Flag.push(EmojiVerifiedBot);
+			else Flag.push(EmojiBot);
 		}
 
-		if (USER.flags.has(UserFlags.VerifiedDeveloper)) FLAG.push(EMOJI_EARLY_VERIFIED_BOT_DEVELOPER);
-		if (USER.flags.has(UserFlags.CertifiedModerator)) FLAG.push(EMOJI_MODERATOR);
-		if (USER.flags.has(UserFlags.ActiveDeveloper)) FLAG.push(EMOJI_ACTIVE_DEVELOPER);
+		if (User.flags.has(UserFlags.VerifiedDeveloper)) Flag.push(EmojiEarlyVerifiedBotDeveloper);
+		if (User.flags.has(UserFlags.CertifiedModerator)) Flag.push(EmojiModerator);
+		if (User.flags.has(UserFlags.ActiveDeveloper)) Flag.push(EmojiActiveDeveloper);
 
-		const EMBED = new EmbedBuilder()
+		const Embed = new EmbedBuilder()
 			.setTitle('Member joined')
-			.setDescription(`**User ID:** ${USER.id}\n**Username:** ${USER.username}\n**Badges:** ${FLAG.length > 0 ? FLAG.join(' ') : 'none'}\n**Created:** <t:${Math.round(USER.createdTimestamp / 1000)}:R>`)
-			.setThumbnail(`https://cdn.discordapp.com/avatars/${USER.id}/${USER.avatar}.png`)
+			.setDescription(`**User ID:** ${User.id}\n**Username:** ${User.username}\n**Badges:** ${Flag.length > 0 ? Flag.join(' ') : 'none'}\n**Created:** <t:${Math.round(User.createdTimestamp / 1000)}:R>`)
+			.setThumbnail(`https://cdn.discordapp.com/avatars/${User.id}/${User.avatar}.png`)
 			.setColor('Green');
 
 		// FIXME Add channel IDs here.
 
 		// Admin logs
-		BOT.channels.cache.get('').send({ embeds: [EMBED] });
+		Bot.channels.cache.get('').send({ embeds: [Embed] });
 
 		// Public logs
-		BOT.channels.cache.get('').send({ content: formatUnixTimestamp(member.joinedTimestamp / 1000, USER) });
+		Bot.channels.cache.get('').send({ content: formatUnixTimestamp(member.joinedTimestamp / 1000, User) });
 
 	},
 };
