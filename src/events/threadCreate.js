@@ -1,5 +1,6 @@
 /**
- * Discord Bot ThreadCreate Event Handler
+ * Discord Bot ThreadCreate Event
+ *
  * @module threadCreate
  * @see {@link https://discord.js.org/#/docs/discord.js/main/class/Client?scrollTo=e-threadCreate}
  */

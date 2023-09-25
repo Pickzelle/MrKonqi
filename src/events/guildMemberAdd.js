@@ -1,5 +1,6 @@
 /**
- * Discord Bot GuildMemberAdd Event Handler
+ * Discord Bot GuildMemberAdd Event
+ *
  * @module guildMemberAdd
  * @see {@link https://discord.js.org/#/docs/discord.js/main/class/Client?scrollTo=e-guildMemberAdd}
  */
@@ -29,7 +30,7 @@ module.exports = {
 	name: 'guildMemberAdd',
 	once: false,
 	/**
-	 * Execute the bot's event handling logic.
+	 * MrKonqi's logic for accounts joining.
 	 *
 	 * @param {import('discord.js').Client} Bot
 	 * @param {import('sqlite3').Database} Database - SQLite3 database

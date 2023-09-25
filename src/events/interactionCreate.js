@@ -1,5 +1,6 @@
 /**
  * Discord Bot InteractionCreate manager.
+ *
  * @module interactionCreate
  * @see {@link https://discord.js.org/#/docs/discord.js/main/class/Client?scrollTo=e-interactionCreate}
  */
@@ -8,7 +9,7 @@ const { red, green } = require('chalk');
 module.exports = {
 	name: 'interactionCreate',
 	/**
-	 * Execute MrKonqi's interaction handling logic.
+	 * MrKonqi's interaction handling logic.
 	 *
 	 * @param {import('discord.js').Client} Bot - The Discord bot client
 	 * @param {import('sqlite3').Database} Database - SQLite3 database

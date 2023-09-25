@@ -1,5 +1,6 @@
 /**
- * Discord Bot GuildMemberRemove Event Handler
+ * Discord Bot GuildMemberRemove Event
+ *
  * @module guildMemberRemove
  * @see {@link https://discord.js.org/#/docs/discord.js/main/class/Client?scrollTo=e-guildMemberRemove}
  */
@@ -29,7 +30,7 @@ module.exports = {
 	name: 'guildMemberRemove',
 	once: false,
 	/**
-	 * Execute the bot's event handling logic.
+	 * MrKonqi's logic for accounts being removed.
 	 *
 	 * @param {import('discord.js').Client} Bot
 	 * @param {import('sqlite3').Database} Database - SQLite3 database

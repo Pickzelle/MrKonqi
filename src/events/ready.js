@@ -1,5 +1,5 @@
 /**
- * MrKonqi's Ready Event
+ * Discord Bot Ready Event
  *
  * @module ready
  * @see {@link https://discord.js.org/#/docs/discord.js/main/class/Client?scrollTo=e-ready}

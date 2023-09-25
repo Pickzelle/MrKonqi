@@ -1,5 +1,6 @@
 /**
- * Discord Bot ThreadDelete Event Handler
+ * Discord Bot ThreadDelete Event
+ *
  * @module threadDelete
  * @see {@link https://discord.js.org/#/docs/discord.js/main/class/Client?scrollTo=e-threadDelete}
  */

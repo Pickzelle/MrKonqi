@@ -1,5 +1,6 @@
 /**
- * Discord Bot ThreadUpdate Event Handler
+ * Discord Bot ThreadUpdate Event
+ *
  * @module threadUpdate
  * @see {@link https://discord.js.org/#/docs/discord.js/main/class/Client?scrollTo=e-threadUpdate}
  */
@@ -11,7 +12,7 @@ module.exports = {
 	name: 'threadUpdate',
 	once: false,
 	/**
-	 * Execute the bot's event handling logic.
+	 * MrKonqi's thread update logic.
 	 *
 	 * @param {import('discord.js').Client} Bot - The Discord bot client
 	 * @param {import('sqlite3').Database} Database - SQLite3 database

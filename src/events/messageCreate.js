@@ -1,5 +1,6 @@
 /**
- * Discord Bot MessageCreate Event Handler
+ * Discord Bot MessageCreate Event
+ *
  * @module messageCreate
  * @see {@link https://discord.js.org/#/docs/discord.js/main/class/Client?scrollTo=e-messageCreate}
  */
