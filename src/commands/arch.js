@@ -6,12 +6,14 @@ const PATH = require('node:path');
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require('discord.js');
 const AUR = require('#modules/callAUR.js');
 const FETCH_PKGS = require('#modules/fetch-pkgs/index.js');
-const LOGO = new AttachmentBuilder(PATH.join(__dirname, '..', '..', 'assets', 'archlinux.png'));
+const LOGO = new AttachmentBuilder(PATH.join(__dirname, '../../assets/archlinux.png'));
 const ROW = new ActionRowBuilder();
 let embed = new EmbedBuilder();
 const STORED = 'stored';
 const { readdir, readFile } = require('node:fs/promises');
 const MEMLIMIT = 512;
+const LOCALE_LIB = require('#lib/locale.js');
+const { getLocale, mergeLocalesKey, getDefaultLocaleKey } = LOCALE_LIB.extra;
 
 // -------------------------
 
@@ -119,6 +121,7 @@ function addField(fieldName, dependencies, inline) {
  * @param {Boolean} DEPENDENCIES - The dependency boolean.
  */
 async function sendEmbed(Interaction, PACKAGE, DEPENDENCIES) {
+	const locale = getLocale(Interaction.locale);
 
 	const FIELDS = [];
 	let description = '';
@@ -128,38 +131,38 @@ async function sendEmbed(Interaction, PACKAGE, DEPENDENCIES) {
 		embed.setTitle(`${PACKAGE.BASE} ${PACKAGE.VERSION}`);
 	}
 
-	description += PACKAGE.ARCH ? `**Architecture:** ${PACKAGE.ARCH}\n` : '**Architecture:** any\n';
-	if (PACKAGE.REPOSITORY) description += `**Repository:** ${PACKAGE.REPOSITORY}\n`;
-	if (PACKAGE.DESC) description += `**Description:** ${PACKAGE.DESC}\n`;
-	if (PACKAGE.URL) description += `**Upstream URL:** ${PACKAGE.URL}\n`;
-	if (PACKAGE.LICENSE) description += `**License:** ${PACKAGE.LICENSE}\n`;
-	if (PACKAGE.PROVIDES) description += `**Provides:** ${PACKAGE.PROVIDES.map(item => `\`${item}\``).join(' ')}\n`;
-	if (PACKAGE.REPLACES) description += `**Replaces:** ${PACKAGE.REPLACES.map(item => `\`${item}\``).join(' ')}\n`;
-	if (PACKAGE.CONFLICTS) description += `**Replaces:** ${PACKAGE.CONFLICTS.map(item => `\`${item}\``).join(' ')}\n`;
-	if (PACKAGE.CSIZE) description += `**Package Size:** ${formatSize(PACKAGE.CSIZE)}\n`;
-	if (PACKAGE.ISIZE) description += `**Installed Size:** ${formatSize(PACKAGE.ISIZE)}\n`;
+	description += locale['architecture:'].format(PACKAGE.ARCH || 'any').toString();
+	if (PACKAGE.REPOSITORY) description += locale['repository:'].format(PACKAGE.REPOSITORY).toString();
+	if (PACKAGE.DESC) description += locale['description:'].format(PACKAGE.DESC).toString();
+	if (PACKAGE.URL) description += locale['upstreamURL:'].format(PACKAGE.URL).toString();
+	if (PACKAGE.LICENSE) description += locale['license:'].format(PACKAGE.LICENSE).toString();
+	if (PACKAGE.PROVIDES) description += locale['provides:'].format(PACKAGE.PROVIDES.map(item => `\`${item}\``).join(' ')).toString();
+	if (PACKAGE.REPLACES) description += locale['replaces:'].format(PACKAGE.REPLACES.map(item => `\`${item}\``).join(' ')).toString();
+	if (PACKAGE.CONFLICTS) description += locale['replaces:'].format(PACKAGE.CONFLICTS.map(item => `\`${item}\``).join(' ')).toString();
+	if (PACKAGE.CSIZE) description += locale['packageSize:'].format(formatSize(PACKAGE.CSIZE)).toString();
+	if (PACKAGE.ISIZE) description += locale['installedSize:'].format(formatSize(PACKAGE.ISIZE)).toString();
 	if (PACKAGE.PACKAGER) {
 		const match = PACKAGE.PACKAGER.match(regex);
-		if (match) description += `**Packager:** ${match[1].trim()}\n`;
+		if (match) description += locale['packager:'].format(match[1].trim()).toString();
 	}
-	if (PACKAGE.SUBMITTER) description += `**Submitter:** ${PACKAGE.SUBMITTER}\n`;
-	if (PACKAGE.MAINTAINER) description += `**Maintainer:** ${PACKAGE.MAINTAINER}\n`;
-	if (PACKAGE.NUMVOTES) description += `**Votes:** ${PACKAGE.NUMVOTES}\n`;
-	if (PACKAGE.POPULARITY) description += `**Popularity:** ${PACKAGE.POPULARITY}\n`;
-	if (PACKAGE.FIRSTSUBMITTED) description += `**First Submitted:** <t:${PACKAGE.FIRSTSUBMITTED}:R>\n`;
-	if (PACKAGE.LASTMODIFIED) description += `**Last Updated:** <t:${PACKAGE.LASTMODIFIED}:R>\n`;
-	if (PACKAGE.BUILDDATE) description += `**Build Date:** <t:${PACKAGE.BUILDDATE}:R>\n`;
-	description += PACKAGE.OUTOFDATE == undefined ? '**Out-of-date:** no.\n' : `**Out-of-date:** <t:${PACKAGE.OUTOFDATE}:f>\n`;
+	if (PACKAGE.SUBMITTER) description += locale['submitter:'].format(PACKAGE.SUBMITTER).toString();
+	if (PACKAGE.MAINTAINER) description += locale['maintainer:'].format(PACKAGE.MAINTAINER).toString();
+	if (PACKAGE.NUMVOTES) description += locale['votes:'].format(PACKAGE.NUMVOTES).toString();
+	if (PACKAGE.POPULARITY) description += locale['popularity:'].format(PACKAGE.POPULARITY).toString();
+	if (PACKAGE.FIRSTSUBMITTED) description += locale['firstSubmitted:'].format(`<t:${PACKAGE.FIRSTSUBMITTED}:R>`).toString();
+	if (PACKAGE.LASTMODIFIED) description += locale['lastUpdated:'].format(`<t:${PACKAGE.LASTMODIFIED}:R>`).toString();
+	if (PACKAGE.BUILDDATE) description += locale['buildDate:'].format(`<t:${PACKAGE.BUILDDATE}:R>`).toString();
+	description += locale['outOfDate:'].format(PACKAGE.OUTOFDATE ? `<t:${PACKAGE.OUTOFDATE}:f>` : 'no').toString();
 
 	if (DEPENDENCIES) {
-		if (PACKAGE.DEPENDS) FIELDS.push(addField('Dependencies', PACKAGE.DEPENDS, true));
-		if (PACKAGE.OPTDEPENDS) FIELDS.push(addField('Optional Dependencies', PACKAGE.OPTDEPENDS, true));
-		if (PACKAGE.MAKEDEPENDS) FIELDS.push(addField('Make Dependencies', PACKAGE.MAKEDEPENDS, true));
+		if (PACKAGE.DEPENDS) FIELDS.push(addField(locale['dependencies'].toString(), PACKAGE.DEPENDS, true));
+		if (PACKAGE.OPTDEPENDS) FIELDS.push(addField(locale['optionalDependencies'].toString(), PACKAGE.OPTDEPENDS, true));
+		if (PACKAGE.MAKEDEPENDS) FIELDS.push(addField(locale['makeDependencies'].toString(), PACKAGE.MAKEDEPENDS, true));
 	}
 
 	if (PACKAGE.REPOSITORY !== 'AUR') {
 		const { lastFetchTimestamp } = JSON.parse(await readFile(PATH.join(__dirname, '..', STORED, 'timestamp.json')));
-		FIELDS.push(addField('Last sync', `<t:${Math.round(lastFetchTimestamp / 1000)}:R>`, false));
+		FIELDS.push(addField(locale['lastSync'].toString(), `<t:${Math.round(lastFetchTimestamp / 1000)}:R>`, false));
 	}
 
 	embed
@@ -176,35 +179,20 @@ async function sendEmbed(Interaction, PACKAGE, DEPENDENCIES) {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('arch')
-		.setDescription('Performs a search in the Arch package database for packages')
-		.setDescriptionLocalizations({
-			'sv-SE': 'Utför en sökning i Archs paketförråd efter paket',
-			'es-ES': 'Hace una busqueda de paquetes en la base de datos de Arch',
-		})
+		.setDescription(getDefaultLocaleKey('command-arch-description'))
+		.setDescriptionLocalizations(mergeLocalesKey('command-arch-description'))
 		.addStringOption(option => option
-			.setName('package')
-			.setDescription('The package you\'re searching for')
+			.setName(getDefaultLocaleKey('command-arch-package-name'))
+			.setDescription(getDefaultLocaleKey('command-arch-package-description'))
 			.setRequired(true)
-			.setNameLocalizations({
-				'sv-SE': 'paket',
-				'es-ES': 'paquete',
-			})
-			.setDescriptionLocalizations({
-				'sv-SE': 'Paketet du vill söka efter',
-				'es-ES': 'El paquete que buscas',
-			}),
+			.setNameLocalizations(mergeLocalesKey('command-arch-package-name'))
+			.setDescriptionLocalizations(mergeLocalesKey('command-arch-package-description')),
 		)
 		.addStringOption(option => option
-			.setName('repository')
-			.setNameLocalizations({
-				'sv-SE': 'paketförråd',
-				'es-ES': 'repositorio',
-			})
-			.setDescription('Which repository to fetch from')
-			.setDescriptionLocalizations({
-				'sv-SE': 'Vilket paketförråd att söka igenom',
-				'es-ES': 'De que repositorio buscar',
-			})
+			.setName(getDefaultLocaleKey('command-arch-repository-name'))
+			.setNameLocalizations(mergeLocalesKey('command-arch-repository-name'))
+			.setDescription(getDefaultLocaleKey('command-arch-repository-description'))
+			.setDescriptionLocalizations(mergeLocalesKey('command-arch-repository-description'))
 			.addChoices(
 				{ name: 'Core', value: 'core' },
 				{ name: 'Core-Testing', value: 'core-testing' },
@@ -217,43 +205,32 @@ module.exports = {
 			),
 		)
 		.addBooleanOption(option => option
-			.setName('dependencies')
-			.setNameLocalizations({
-				'sv-SE': 'beroenden',
-				'es-ES': 'dependencias',
-			})
-			.setDescription('Whether or not to show dependencies for the given package')
-			.setDescriptionLocalizations({
-				'sv-SE': 'Huruvida beroenden för det givna paketet ska visas eller inte',
-				'es-ES': 'Si mostrar o no las dependencias del paquete',
-			}),
+			.setName(getDefaultLocaleKey('command-arch-dependencies-name'))
+			.setNameLocalizations(mergeLocalesKey('command-arch-dependencies-name'))
+			.setDescription(getDefaultLocaleKey('command-arch-dependencies-description'))
+			.setDescriptionLocalizations(mergeLocalesKey('command-arch-dependencies-description')),
 		)
 		.addBooleanOption(option => option
-			.setName('ephemeral')
-			.setNameLocalizations({
-				'sv-SE': 'efemär',
-				'es-ES': 'efímero',
-			})
-			.setDescription('Toggles whether or not this message should be ephemeral')
-			.setDescriptionLocalizations({
-				'sv-SE': 'Växlar om detta meddelande ska vara kortlivat eller inte',
-				'es-ES': 'Establece si este mensaje debería ser efímero',
-			}),
+			.setName(getDefaultLocaleKey('commands-ephemeral-name'))
+			.setNameLocalizations(mergeLocalesKey('commands-ephemeral-name'))
+			.setDescription(getDefaultLocaleKey('commands-ephemeral-description'))
+			.setDescriptionLocalizations(mergeLocalesKey('commands-ephemeral-description')),
 		),
 
 	/**
 	 * Execute the bot's command handling logic.
 	 *
 	 * @param {import('discord.js').Client} BOT - The Discord bot client
-	 * @param {import('sqlite3').Database} DATABASE - SQLite3 database
-	 * @param {import('discord.js').Interaction} interaction - A Discord interaction
+	 * @param {import('sqlite3').Database} DB - SQLite3 database
+	 * @param {import('discord.js').Interaction} Interaction - A Discord interaction
 	*/
 	async execute(BOT, DB, Interaction) {
+		const locale = getLocale(Interaction.locale);
 
-		const EPHEMERAL = Interaction.options.getBoolean('ephemeral') ?? true;
-		const QUERY = Interaction.options.getString('package');
-		const DEPENDENCIES = Interaction.options.getBoolean('dependencies');
-		let Repository = Interaction.options.getString('repository');
+		const EPHEMERAL = Interaction.options.getBoolean(getDefaultLocaleKey('command-ephermal-name')) ?? true;
+		const QUERY = Interaction.options.getString(getDefaultLocaleKey('command-arch-package-name'));
+		const DEPENDENCIES = Interaction.options.getBoolean(getDefaultLocaleKey('command-arch-dependencies-name'));
+		let Repository = Interaction.options.getString(getDefaultLocaleKey('command-arch-repository-name'));
 
 		await Interaction.deferReply({ ephemeral: EPHEMERAL });
 
@@ -264,7 +241,7 @@ module.exports = {
 
 			// Check if DrKonqi is over his memory limit of 512 MiB.
 			if (process.memoryUsage().rss / (1024 * 1024) > MEMLIMIT) {
-				return await Interaction.editReply('I\'m currently running at max memory and therefore unable to handle your request. Please try again later.');
+				return await Interaction.editReply(locale['max-mem-cant-process'].toString());
 			}
 
 			try {
@@ -295,7 +272,7 @@ module.exports = {
 					packageFound = true;
 				}
 				else {
-					return await Interaction.editReply(`I'm sorry, I couldn't find a package named **${QUERY}** in the **${Repository}** repository.`);
+					return await Interaction.editReply(locale['cant-find-package-query-in-repo'].format(QUERY, Repository).toString());
 				}
 
 			}
@@ -327,7 +304,7 @@ module.exports = {
 			}
 
 			if (!packageFound) {
-				return await Interaction.editReply({ content: `I'm sorry, I couldn't find a package named **${QUERY}** in the repos.` });
+				return await Interaction.editReply({ content: locale['cant-find-package-query'].format(QUERY).toString() });
 			}
 			else if (PACKAGES.length >= 2) {
 
@@ -347,12 +324,13 @@ module.exports = {
 				}
 
 				embed
-					.setTitle('Name conflict detected!')
+					.setTitle(locale['detected-name-confict'].toString())
 					.setColor('#1793d1')
-					.setThumbnail('attachment://archlinux.png');
-
-				if (DEPENDENCIES) embed.setDescription(`Please select which package you want to show.\u2007\n${description}`);
-				else embed.setDescription(`Please select which package you want to show.\n${description}`);
+					.setThumbnail('attachment://archlinux.png')
+					.setDescription(
+						locale['select-package-to-show']
+							.format(description, DEPENDENCIES ? '\u2007' : '').toString(),
+					);
 
 				// ! This line causes discord.js to use `buffer.Blob`, which is considered a experimental feature in this node version
 				await Interaction.editReply({ content: '', embeds: [embed], files: [LOGO], components: [ROW] });

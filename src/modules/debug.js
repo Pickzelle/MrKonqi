@@ -5,7 +5,8 @@ let config = null;
 try {
 	config = require(PATH.join(__dirname, '..', 'config.json'));
 }
-catch {}
+// eslint-disable-next-line no-empty
+catch { }
 
 /**
  * Outputs debugging information.
@@ -35,9 +36,9 @@ function debug(source, debugStatus) {
 
 	console.log(
 		debugStatus === 2 ? yellowBright(source) :
-		debugStatus === 0 ? green(`${source}${' '.repeat(Math.max(0, INDENTATION - source.length))} - ${statusMessage}`) :
-		debugStatus === 1 ? red(`${source}${' '.repeat(Math.max(0, INDENTATION - source.length))} - ${statusMessage}`) :
-		red(`${source}${' '.repeat(Math.max(0, INDENTATION - source.length))} - ${statusMessage}`),
+			debugStatus === 0 ? green(`${source}${' '.repeat(Math.max(0, INDENTATION - source.length))} - ${statusMessage}`) :
+				debugStatus === 1 ? red(`${source}${' '.repeat(Math.max(0, INDENTATION - source.length))} - ${statusMessage}`) :
+					red(`${source}${' '.repeat(Math.max(0, INDENTATION - source.length))} - ${statusMessage}`),
 	);
 }
 
