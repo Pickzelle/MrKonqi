@@ -14,16 +14,16 @@ const { EmbedBuilder, UserFlags } = require('discord.js');
  * @returns {string} The formatted timestamp string.
  */
 function formatUnixTimestamp(timestamp, User) {
-	const Date = new Date(timestamp * 1000);
+	const Time = new Date(timestamp);
 
-	const Year = Date.getFullYear();
-	const Month = String(Date.getMonth() + 1).padStart(2, '0');
-	const Day = String(Date.getDate()).padStart(2, '0');
-	const Hours = String(Date.getHours()).padStart(2, '0');
-	const Minutes = String(Date.getMinutes()).padStart(2, '0');
-	const Seconds = String(Date.getSeconds()).padStart(2, '0');
+	const Year = Time.getFullYear();
+	const Month = String(Time.getMonth() + 1).padStart(2, '0');
+	const Day = String(Time.getDate()).padStart(2, '0');
+	const Hours = String(Time.getHours()).padStart(2, '0');
+	const Minutes = String(Time.getMinutes()).padStart(2, '0');
+	const Seconds = String(Time.getSeconds()).padStart(2, '0');
 
-	return `> ${Year}-${Month}-${Day}T${Hours}:${Minutes}:${Seconds} /TuxCord ${User} CREATE`;
+	return `> ${Year}-${Month}-${Day}T${Hours}:${Minutes}:${Seconds} /TuxCord ${User} DELETE`;
 }
 
 module.exports = {
@@ -40,6 +40,7 @@ module.exports = {
 
 		// Add emoji IDs here.
 
+		const Time = new Date();
 		const Flag = [];
 		const User = member.user;
 		const Guild = Bot.guilds.cache.get('');
@@ -86,10 +87,10 @@ module.exports = {
 		// Add channel IDs here.
 
 		// Admin logs
-		Bot.channels.cache.get('').send({ embeds: [Embed] });
+		Bot.channels.cache.get('').send({ embeds: [Embed] }).catch(() => {});
 
 		// Public logs
-		Bot.channels.cache.get('').send({ content: formatUnixTimestamp(member.joinedTimestamp / 1000, User) });
+		Bot.channels.cache.get('').send({ content: formatUnixTimestamp(Time, User) }).catch(() => {});
 
 	},
 };
