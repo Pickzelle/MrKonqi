@@ -6,21 +6,23 @@ MrKonqi is a Discord bot made for the TuxCord Discord server. It provides severa
 
 # Table of Contents
 
-- [Description](#description)
-- [Installation](#installation)
+- [MrKonqi](#mrkonqi)
+- [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [Installation](#installation)
     - [Requirements](#requirements)
-    - [Optional](#optional)
     - [Configuration](#configuration)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [Support](#support)
-- [Maintainers](#maintainers)
+  - [Behavior](#behavior)
+  - [Usage](#usage)
+  - [Contributing](#contributing)
+  - [Support](#support)
+  - [Maintainers](#maintainers)
     - [List of Maintainers](#list-of-maintainers)
     - [Contact](#contact)
-- [Credits](#credits)
+  - [Credits](#credits)
     - [Tyson Tan](#tyson-tan)
     - [Distributions](#distributions)
-- [License](#license)
+  - [License](#license)
 
 ## Description
 
@@ -30,80 +32,92 @@ MrKonqi is a Discord bot used for moderating the TuxCord Discord server. He has 
 
 ### Requirements
 
-- [node.js](https://nodejs.org/) v18.17.1+
-- [discord.js](https://www.npmjs.com/package/discord.js) v14
-- [chalk](https://www.npmjs.com/package/chalk) 4.1.2
-- [sqlite3](https://www.npmjs.com/package/sqlite3) 5.1.6+
-- [axios](https://www.npmjs.com/package/axios) 1.4.0+
+- [bunjs](https://bun.sh/) v1.1.18+ recommended
+- `package.lock` dependencies
 
-> ⚠ Chalk 5 is ESM and therefore version 4 must be used.\
-⚠ npm's sqlite3 package requires SQLite to be installed on the system for Node.js® bindings.
+> [!WARNING]
+> sqlite3 version requires SQLite installed on the system.
+> This dependency might become unused soon
 
 ```bash
 git clone https://github.com/Pickzelle/MrKonqi.git
 cd MrKonqi
-npm install
+bun i --frozen-lockfile
 ```
 
-> ⓘ You can pass `--no-optional` to npm if you don't want the optional packages.
+> [!NOTE]
+> You can pass `--production` to `bun i` to ignore development dependencies, these are not required for functionality, just development experience
 
-### Optional
+#### Prisma
+One last step is generating the prisma client, this can be done through `bun run gen:prisma` (`bun run gen` runs all generation scripts, including json schema generation ones, which won't work without development dependencies).
 
-- nvm (Node Version Manager)
-- ESLint
-- Dotenv
+Before that, we need a URL to access the Postgres DB, provided by the environmental variable `DATABASE_URL` or imported by default if placed in `.env` file.
 
-> ⓘ nvm is a package used to manage versions of Node.js®. ([Install instructions](https://github.com/nvm-sh/nvm#installing-and-updating))\
-> ⓘ ESLint can assist you in adhering to the same development ruleset as me. ([Install instructions](https://github.com/eslint/eslint#installation-and-usage))\
-> ⓘ dotenv is a npm module used to load env files.
+> [!NOTE]
+> The script must be ran after any change in the prisma scheme or to regenerate the client, there's no problem with running even if the schema is up to date.
 
-> ⚠ These are optional packages and not required for the bot to work.
+<!-- maybe place this steps along with possible troubleahooting (missing schemas, pitdated version...) in another file? -->
+If you decide to set up your own Postgres DB, you'll need some basic unix terminal knowledge:
+* Install the necessary packages
+* Get the service active, either enable permanently or start it before this project.
+* Then, if you don't want to set up detailed permissions and just want it to work (taking `konqi` as database and user name, and `password` as password):
+```sh
+[user@machine ~]$ sudo/doas su - postgres
+[postgres@machine ~]$ createuser konqi
+[postgres@machine ~]$ createdb konqi
+[postgres@machine ~]$ psql
+psql (15.4)
+Type "help" for help.
+
+postgres=# alter user konqi with encrypted password 'password';
+ALTER ROLE
+postgres=# grant all privileges on database konqi to konqi;
+GRANT
+postgres=alter user konqi createdb;
+ALTER ROLE
+postgres=\c konqi postgres
+You are now connected to database "konqi" as user "postgres".
+konqi=# grant all on schema public to konqi;
+GRANT
+postgres=# ^D
+\q
+could not save history to file "/var/lib/postgres/.psql_history": No such file or directory
+[postgres@machine ~]$ ^D
+[user@machine ~]$ ^D
+```
+(`^D` being <kbd>Ctrl</kbd> + <kbd>D</kbd>)
+* And finally just place our DB URL of format `postgresql://<user>:<password>@<host>:<port>/<dbname>` in `.env` (following example assumes previous case with standard defaults)
+```env
+DATABASE_URL="postgresql://konqi:password@127.0.0.1:5432/konqi"
+```
 
 ### Configuration
 
-In the src directory of this repository, you'll find a [JSON](./src/config.template.json) file that governs the bot's behavior. To configure the bot, you can either modify the JSON file directly or utilize environment variables for configuration. The following values can be defined using either approach:
+In `config/config.template.jsonc` you'll find a [JSON](./src/config.template.json) template file that governs the bot's behavior.
 
-| Example | Description |
-| --------------------- | ----------- |
-| `BOT_ID`=id | Denotes the Discord bot's unique identification.
-| `DEBUG`=boolean | Specifies whether debugging mode is enabled or not.
-| `DEVELOPER_ID`=id | The id the bot will reference to as the Developer.
-| `ENV`=path | Defines the path to the .env file.
-| `GUILD_ID`=id | Signifies the Guild ID on Discord where the commands will be sent.
-| `TOKEN`=token | Represents the token of the Discord bot.
+To configure the bot you have to copy that file as `config/config.json` and edit it accordingly, replacing the placeholders with the actual values corresponding to your project, don't forget to remove comments.
 
-Here's an example structure for your config.json file:
+## Behavior
 
-```json
-{
-    "BOT_ID": "ID",
-    "DEBUG": true,
-    "DEVELOPER_ID": "ID",
-    "ENV": "PATH",
-    "GUILD_ID": "ID",
-    "TOKEN": "TOKEN"
-}
-```
+There's also several env variables and CLI args that slightly change some aspects of the bot behavior, mainly oriented towards server-side.
 
-Replace the placeholders with the actual values corresponding to your project. This configuration ensures that the bot operates effectively within the specified environment.
+> [!IMPORTANT]
+> This section needs documentation, though CLI arg are accessible through `bun start -h`
 
-Alternatively, to use environment variables, you can name them in the same way as the JSON keys.
-
-> ⓘ ENV and DEBUG are optional values and not required for the bot to function.\
-> ⓘ Meanwhile, DEVELOPER\_ID must be specified due to some commands being developer-only.
-
-> ⚠ Using environment variables will override the given values in the [JSON](./src/config.template.json) file.
-
-> In certain files, specific sections have been redacted due to the inclusion of IDs. To enable the corresponding functionality of the bot, manual intervention is required. Detailed guidance on the required modifications can be found in the respective files listed below:
-
-[guildMemberAdd.js](./src/events/guildMemberAdd.js)\
-[guildMemberRemove.js](./src/events/guildMemberRemove.js)
-
-[updateFeatureRequest.js](./src/modules/updateFeatureRequest.js)
+<!--
+| Example           | Description                                                        |
+| ----------------- | ------------------------------------------------------------------ |
+| `BOT_ID`=id       | Denotes the Discord bot's unique identification.                   |
+| `DEBUG`=boolean   | Specifies whether debugging mode is enabled or not.                |
+| `DEVELOPER_ID`=id | The id the bot will reference to as the Developer.                 |
+| `ENV`=path        | Defines the path to the .env file.                                 |
+| `GUILD_ID`=id     | Signifies the Guild ID on Discord where the commands will be sent. |
+| `TOKEN`=token     | Represents the token of the Discord bot.                           |
+-->
 
 ## Usage
 
-Running the bot is as simple as being in its root directory and running: `node index.js`
+Running the bot is as simple as being in its root directory and running: `bun start`
 
 Once the command is run, you should see the text `Ready! We're logged in as (bot)` indicating that its ready event has run and it's accepting commands.
 

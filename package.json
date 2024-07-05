@@ -1,43 +1,45 @@
 {
-  "name": "mrkonqi",
-  "version": "1.1.6",
-  "description": "MrKonqi is TuxCord's official Discord bot.",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "node .",
-    "dev": "node --nolazy --inspect .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint ."
-  },
-  "author": "PixeL",
-  "license": "GPL-3.0",
-  "dependencies": {
-    "axios": "^1.4.0",
-    "chalk": "^4.1.2",
-    "discord.js": "^14.13.0",
-    "openpgp": "^5.10.1",
-    "sqlite3": "^5.1.6"
-  },
-  "optionalDependencies": {
-    "dotenv": "^16.3.1"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.4.1",
-    "@typescript-eslint/parser": "^6.4.1",
-    "eslint": "^8.47.0"
-  },
-  "imports": {
-    "#root/*": "./*",
-    "#src/*": "./src/*",
-    "#buttons/*": "./src/buttons/*",
-    "#commands/*": "./src/commands/*",
-    "#events/*": "./src/events/*",
-    "#modals/*": "./src/modals/*",
-    "#modules/*": "./src/modules/*",
-    "#lib/*": "./src/lib/*",
-    "#stored/*": "./src/stored/*"
-  },
-  "engines": {
-    "node": ">=18.17.1"
-  }
+	"name": "mrkonqirewrite",
+	"module": "src/index.ts",
+	"type": "module",
+	"version": "0.0.0",
+	"scripts": {
+		"start": "bun run .",
+		"dev": "bun run --inspect .",
+		"gen": "bun run gen:schemas && bun run gen:prisma",
+		"gen:schemas": "./scripts/gen/schemas.sh",
+		"gen:prisma": "bun x prisma db push && bun x prisma generate",
+		"check": "bun x @biomejs/biome check",
+		"check:write": "bun x @biomejs/biome check --write .",
+		"lint": "bun x @biomejs/biome lint",
+		"lint:write": "bun x @biomejs/biome lint --write .",
+		"format": "bun x @biomejs/biome format",
+		"format:write": "bun x @biomejs/biome format --write ."
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.8.3",
+		"@types/bun": "latest",
+		"ts-json-schema-generator": "^2.3.0"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"@prisma/client": "^5.16.1",
+		"axios": "^1.7.2",
+		"chalk": "4.1.2",
+		"command-line-args": "^5.2.1",
+		"discord.js": "14.13.0",
+		"node_characterai": "^1.2.7",
+		"openpgp": "^5.11.2",
+		"prisma": "^5.16.1",
+		"sqlite3": "^5.1.7"
+	},
+	"imports": {
+		"#interfaces/*": "./src/interfaces/*",
+		"#lib/*": "./src/lib/*",
+		"#util/*": "./src/util/*",
+		"#modules/*": "./src/modules/*",
+		"#src/*": "./src/*"
+	}
 }

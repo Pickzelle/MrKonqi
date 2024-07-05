@@ -1,0 +1,21 @@
+// After you're done, remove comments and rename/copy as `config.json` (default config path)
+{
+	"$schema": "./config.schema.json",
+
+	"discord": {
+		"token": "<discord token here>",
+		"id": {
+			"bot": "<bot id here>",
+			"guild": "<desired guild id here>"
+		}
+	},
+
+	"dirs": {
+		"log": "logs/"
+	},
+
+	// These are character IDs, just konqi for now
+	"characterAI": {
+		"MrKonqi": "c-jq7OQreWYuZlzWD4b03tPtPJvio3qDwOfi9YnVfng"
+	}
+}
