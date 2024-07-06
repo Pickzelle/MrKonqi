@@ -1,0 +1,35 @@
+{
+	"compilerOptions": {
+		// Enable latest features
+		"lib": ["ESNext", "DOM"],
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleDetection": "force",
+		"allowJs": true,
+
+		// Bundler mode
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"verbatimModuleSyntax": true,
+		"noEmit": true,
+
+		// Best practices
+		"strict": true,
+		"skipLibCheck": true,
+		"noFallthroughCasesInSwitch": true,
+
+		// Some stricter flags (disabled by default)
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noPropertyAccessFromIndexSignature": false,
+		"paths": {
+			"#interfaces/*": ["./src/interfaces/*"],
+			"#interfaces": ["./src/interfaces"],
+			"#lib/*": ["./src/lib/*"],
+			"#util/*": ["./src/util/*"],
+			"#modules/*": ["./src/modules/*"],
+			"#src/*": ["./src/*"],
+			"#root/*": ["./*"]
+		}
+	}
+}

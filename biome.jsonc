@@ -1,0 +1,37 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
+	"javascript": {
+		"formatter": {
+			"semicolons": "asNeeded",
+			"quoteStyle": "single"
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"style": {
+				"useImportType": "error"
+			},
+			"correctness": {
+				"noUnusedVariables": "warn",
+				"noUnusedImports": "warn",
+				"noUnusedLabels": "warn"
+			},
+			"suspicious": {
+				"noConsoleLog": "warn"
+			}
+		}
+	},
+	"files": {
+		"ignore": [
+			"node_modules/**",
+			"data/**",
+			".vscode/launch.json",
+			"src/discord/_old/stored/**"
+		]
+	}
+}

@@ -1,0 +1,20 @@
+name: Biome Check
+
+on:
+  push:
+    branches-ignore:
+      - dependabot/npm_and_yarn/**
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+
+      - name: Install Bun Deps
+        run: bun i --frozen-lockfile
+
+      - name: Lint
+        run: bun run check
