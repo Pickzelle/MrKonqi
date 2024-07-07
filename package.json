@@ -1,8 +1,9 @@
 {
-	"name": "mrkonqirewrite",
+	"name": "mrkonqi",
+	"version": "1.1.6",
+	"description": "MrKonqi is TuxCord's official Discord bot.",
 	"module": "src/index.ts",
 	"type": "module",
-	"version": "0.0.0",
 	"scripts": {
 		"start": "bun run .",
 		"dev": "bun run --inspect .",
@@ -16,6 +17,8 @@
 		"format": "bun x @biomejs/biome format",
 		"format:write": "bun x @biomejs/biome format --write ."
 	},
+	"author": "PixeL",
+	"license": "GPL-3.0",
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
 		"@types/bun": "latest",
