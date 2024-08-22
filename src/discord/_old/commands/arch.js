@@ -20,28 +20,10 @@ const ROW = new ActionRowBuilder()
 let embed = new EmbedBuilder()
 const STORED = 'stored'
 const { readdir, readFile } = require('node:fs/promises')
+const { hsize_b } = require('#util/units')
 const MEMLIMIT = 512
 
 // -------------------------
-
-/**
- * Formats a size in bytes into a human-readable string with appropriate units.
- *
- * @param {number} sizeInBytes - The size to be formatted, in bytes.
- * @returns {string} The formatted size with units.
- */
-function formatSize(sizeInBytes) {
-	const units = ['B', 'KiB', 'MiB', 'GiB', 'TiB']
-	let size = Number.parseFloat(sizeInBytes)
-
-	let unitIndex = 0
-	while (size >= 1024 && unitIndex < units.length - 1) {
-		size /= 1024
-		unitIndex++
-	}
-
-	return `${size.toFixed(2)} ${units[unitIndex]}`
-}
 
 /**
  * Converts and updates properties of a PACKAGE object based on a given Repository string.
@@ -152,9 +134,9 @@ async function sendEmbed(Interaction, PACKAGE, DEPENDENCIES) {
 	if (PACKAGE.CONFLICTS)
 		description += `**Replaces:** ${PACKAGE.CONFLICTS.map((item) => `\`${item}\``).join(' ')}\n`
 	if (PACKAGE.CSIZE)
-		description += `**Package Size:** ${formatSize(PACKAGE.CSIZE)}\n`
+		description += `**Package Size:** ${hsize_b(PACKAGE.CSIZE, 2)}\n`
 	if (PACKAGE.ISIZE)
-		description += `**Installed Size:** ${formatSize(PACKAGE.ISIZE)}\n`
+		description += `**Installed Size:** ${hsize_b(PACKAGE.ISIZE, 2)}\n`
 	if (PACKAGE.PACKAGER) {
 		const match = PACKAGE.PACKAGER.match(regex)
 		if (match) description += `**Packager:** ${match[1].trim()}\n`
