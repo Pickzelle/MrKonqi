@@ -1,5 +1,9 @@
 import type { PrismaClient } from '@prisma/client/extension'
-import type { Client, Interaction, SlashCommandOptionsOnlyBuilder } from 'discord.js'
+import type {
+	Client,
+	ChatInputCommandInteraction,
+	SlashCommandOptionsOnlyBuilder,
+} from 'discord.js'
 
 import type interfaces from '#interfaces'
 
@@ -8,7 +12,7 @@ type callback = (
 	DB: PrismaClient,
 	STORGE: interfaces.storage,
 	CONFIG: interfaces.config,
-	interaction: Interaction
+	interaction: ChatInputCommandInteraction,
 ) => Promise<void>
 
 export default interface commandExport {

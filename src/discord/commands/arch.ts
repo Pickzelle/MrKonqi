@@ -44,7 +44,7 @@ export default {
 				),
 		),
 
-	async execute() {
-		//
+	async execute(_BOT, _DB, _STORE, _CONFIG, interaction) {
+		interaction.reply('command not implemented')
 	},
 } as schema
