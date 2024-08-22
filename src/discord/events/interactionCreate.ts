@@ -23,9 +23,9 @@ export default {
 					content =
 						"This command's settings is outdated. Please contact the maintainer about updating it."
 				} else {
-                    content = 'There was an error while executing this command!'
-                    await command.execute(BOT, DB, STORAGE, CONFIG, interaction)
-                }
+					content = 'There was an error while executing this command!'
+					await command.execute(BOT, DB, STORAGE, CONFIG, interaction)
+				}
 			}
 			// else if (interaction.isButton()) {
 			// 	let button
@@ -73,7 +73,7 @@ export default {
 			// 	if (modal) modal.execute(Bot, interaction)
 			// }
 		} catch (error) {
-            log('error', '%', [error])
+			log('error', '%', [error])
 
 			if (interaction.isChatInputCommand()) {
 				try {

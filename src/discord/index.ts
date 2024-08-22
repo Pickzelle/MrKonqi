@@ -6,10 +6,10 @@ import type { PrismaClient } from '@prisma/client/extension'
 import type interfaces from '#interfaces'
 import { log } from '#lib/logger/index.js'
 
-import * as events from './events'
-import * as commands from './commands'
-import __old from './_old'
 import type commandExport from '#src/discord/commands/schema.js'
+import __old from './_old'
+import * as commands from './commands'
+import * as events from './events'
 
 export default async function (
 	DB: PrismaClient,

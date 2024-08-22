@@ -1,5 +1,5 @@
+import { describe, expect, test } from 'bun:test'
 import * as units from './units'
-import { describe, test, expect } from 'bun:test'
 
 describe('magnitude', () => {
 	const fn = units.normalize_magnitude

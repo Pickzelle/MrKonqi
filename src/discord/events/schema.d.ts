@@ -1,5 +1,5 @@
-import type { Client, ClientEvents } from 'discord.js'
 import type { PrismaClient } from '@prisma/client'
+import type { Client, ClientEvents } from 'discord.js'
 
 import type interfaces from '#interfaces'
 import type commandExport from '#src/discord/commands/schema.js'

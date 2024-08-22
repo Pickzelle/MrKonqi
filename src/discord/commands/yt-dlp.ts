@@ -1,8 +1,8 @@
 import { $ } from 'bun'
 import { AttachmentBuilder, SlashCommandBuilder } from 'discord.js'
 
-import type schema from './schema'
 import { log } from '#lib/logger/index.ts'
+import type schema from './schema'
 
 const maxs = 8 * 1024 ** 2 // TODO
 const mimetypes: Map<string, string[]> = new Map()

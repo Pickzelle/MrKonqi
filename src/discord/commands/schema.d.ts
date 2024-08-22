@@ -1,7 +1,7 @@
 import type { PrismaClient } from '@prisma/client/extension'
 import type {
-	Client,
 	ChatInputCommandInteraction,
+	Client,
 	SlashCommandOptionsOnlyBuilder,
 } from 'discord.js'
 

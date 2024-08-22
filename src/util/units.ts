@@ -1,5 +1,5 @@
 const magnitude_prefix_m = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']
-const magnitude_prefix_b = magnitude_prefix_m.map(v => v ? `${v}i` : '')
+const magnitude_prefix_b = magnitude_prefix_m.map((v) => (v ? `${v}i` : ''))
 
 export function hsize_m(bytes: number, precission = 2) {
 	const norm_size = normalize_magnitude(
