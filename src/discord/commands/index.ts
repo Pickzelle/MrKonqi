@@ -1,2 +1,3 @@
 export * as arch from './arch'
-export * as ytDlp from './yt-dlp'
+export * as ytdlp from './ytdlp'
+export * as dlp from './dlp'

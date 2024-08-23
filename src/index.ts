@@ -18,8 +18,7 @@ const { config, processed: extraConf } = await parseConfig(args.config)
 logger.reconfigure({ logfile: extraConf.logfile })
 log('success', 'parse config')
 
-if (config.path?.paralload)
-	paralload.setParapath(config.path.paralload)
+if (config.path?.paralload) paralload.setParapath(config.path.paralload)
 
 const db = loadClient.prisma()
 const storage = loadData.syncedStorage<interfaces.storage>()

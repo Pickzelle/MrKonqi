@@ -2,9 +2,9 @@ import { $ } from 'bun'
 import { AttachmentBuilder, SlashCommandBuilder } from 'discord.js'
 
 import { log } from '#lib/logger/index.ts'
+import { DISCORD_MAX_UPLOAD } from '#util/constants'
 import type schema from './schema'
 
-const maxs = 8 * 1024 ** 2 // TODO
 const mimetypes: Map<string, string[]> = new Map()
 try {
 	for await (const line of $`cat /etc/mime.types | grep -v '^#'`.lines()) {
@@ -19,7 +19,7 @@ try {
 
 export default {
 	data: new SlashCommandBuilder()
-		.setName('yt-dlp')
+		.setName('dlp')
 		.setDescription('Download video using yt-dlp')
 		.addStringOption((option) =>
 			option
@@ -51,11 +51,13 @@ export default {
 
 		interaction.editReply('starting download...')
 		const proc =
-			await $`yt-dlp -o - --max-filesize ${maxs} --prefer-free-formats ${ao ? '-x' : ''} ${query}`
+			await $`yt-dlp -o - --max-filesize ${DISCORD_MAX_UPLOAD} --prefer-free-formats ${ao ? '-x' : ''} ${query}`
 				.nothrow()
 				.quiet()
-		if (proc.exitCode !== 0) {
-			log('error', '[interaction/cmd/yt-dlp] download failed. %', [proc.stderr])
+		if (proc.exitCode !== 0 || proc.stdout.length === 0) {
+			log('error', '[interaction/cmd/yt-dlp] download failed. %', [
+				proc.stderr.toString(),
+			])
 			return interaction.editReply('command error')
 		}
 

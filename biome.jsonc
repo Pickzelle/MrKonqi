@@ -31,7 +31,8 @@
 			"node_modules/**",
 			"data/**",
 			".vscode/launch.json",
-			"src/discord/_old/stored/**"
+			"src/discord/_old/stored/**",
+			"**/*.schema.json"
 		]
 	}
 }
