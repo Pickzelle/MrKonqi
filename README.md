@@ -11,6 +11,7 @@ MrKonqi is a Discord bot made for the TuxCord Discord server. It provides severa
   - [Description](#description)
   - [Installation](#installation)
     - [Requirements](#requirements)
+      - [Prisma](#prisma)
     - [Configuration](#configuration)
   - [Behavior](#behavior)
   - [Usage](#usage)
@@ -34,6 +35,7 @@ MrKonqi is a Discord bot used for moderating the TuxCord Discord server. He has 
 
 - [bunjs](https://bun.sh/) v1.1.18+ recommended
 - `package.lock` dependencies
+- [paralload](https://github.com/ErrorNoInternet/Paralload) either on `$PATH` or configured in `config.path.paralload`
 
 > [!WARNING]
 > sqlite3 version requires SQLite installed on the system.

@@ -13,6 +13,10 @@ export interface config {
 		MrKonqi: string
 	}
 
+	path?: {
+		paralload?: string
+	}
+
 	dirs: {
 		log: string
 	}
