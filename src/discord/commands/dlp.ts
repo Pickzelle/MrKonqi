@@ -40,7 +40,7 @@ export default {
 		const ao = interaction.options.getBoolean('onlyaudio') ?? false
 
 		if (query.startsWith('-'))
-			return interaction.editReply("query can't start with `-`")
+			return await interaction.editReply("query can't start with `-`")
 
 		log(
 			'info',
@@ -49,7 +49,7 @@ export default {
 			false,
 		)
 
-		interaction.editReply('starting download...')
+		await interaction.editReply('starting download...')
 		const proc =
 			await $`yt-dlp -o - --max-filesize ${DISCORD_MAX_UPLOAD} --prefer-free-formats ${ao ? '-x' : ''} ${query}`
 				.nothrow()
@@ -58,7 +58,7 @@ export default {
 			log('error', '[interaction/cmd/yt-dlp] download failed. %', [
 				proc.stderr.toString(),
 			])
-			return interaction.editReply('command error')
+			return await interaction.editReply('command error')
 		}
 
 		const mimetype = (await magicGet(proc.stdout)).split(';')[0]
@@ -67,7 +67,7 @@ export default {
 
 		const fname = interaction.id + fext
 
-		interaction.editReply('uploading result...')
+		await interaction.editReply('uploading result...')
 		const file = new AttachmentBuilder(proc.stdout, {
 			name: fname,
 		})

@@ -30,13 +30,13 @@ export default {
 		const oa = interaction.options.getBoolean('onlyaudio') ?? false
 
 		if (query.startsWith('-'))
-			return interaction.editReply("query can't start with `-`")
+			return await interaction.editReply("query can't start with `-`")
 
 		const json = await getVidJson(query)
 		const fmts = jsonGetFmts(json)
 		const fmt = findFmt(fmts, oa, DISCORD_MAX_UPLOAD)
 		if (!fmt) {
-			return interaction.editReply('error finding video')
+			return await interaction.editReply('error finding video')
 		}
 
 		log(
@@ -46,19 +46,19 @@ export default {
 			false,
 		)
 
-		interaction.editReply('starting download...')
+		await interaction.editReply('starting download...')
 
 		const [buf, err] = await paralload.workers(fmt.url, 2)
 		if (buf.length === 0 || err !== null) {
 			log('error', '[interaction/cmd/yt-dlp] download failed. %', [err])
-			return interaction.editReply('command error')
+			return await interaction.editReply('command error')
 		}
 
 		const fext = fmt.ext ? `.${fmt.ext}` : ''
 
 		const fname = interaction.id + fext
 
-		interaction.editReply('uploading result...')
+		await interaction.editReply('uploading result...')
 		const file = new AttachmentBuilder(buf, {
 			name: fname,
 		})
